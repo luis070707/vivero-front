@@ -1,7 +1,8 @@
 // js/perfil.js
 (() => {
   // URL base de mi API
-  const API = "http://127.0.0.1:4000";
+  const API = "https://vivero-back.onrender.com";
+
   // Atajo para seleccionar un solo elemento
   const $ = (s) => document.querySelector(s);
 

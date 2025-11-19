@@ -1,7 +1,8 @@
 // js/reports.js - solo con datos de la API
 (() => {
   // URL base de mi API
-  const API = "http://127.0.0.1:4000";
+const API = "https://vivero-back.onrender.com";
+
   // Helper rápido para el DOM
   const $  = (s) => document.querySelector(s);
 

@@ -1,7 +1,8 @@
 // js/main.js
 (() => {
   // URL base de la API que uso en esta página
-  const API = "http://127.0.0.1:4000";
+const API = "https://vivero-back.onrender.com";
+
 
   // --- Helpers DOM ---
   // Atajo para buscar un solo elemento

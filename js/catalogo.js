@@ -1,7 +1,8 @@
 // js/catalogo.js — Catálogo + Wishlist + Carrito + Quick View
 (() => {
   // URL base de la API
-  const API = "http://127.0.0.1:4000";
+  const API = "https://vivero-back.onrender.com";
+
   // Atajos para seleccionar elementos
   const $  = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));

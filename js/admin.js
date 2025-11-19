@@ -1,7 +1,8 @@
 // js/admin.js
 (() => {
   // URL base del backend
-  const API = "http://127.0.0.1:4000";
+  const API = "https://vivero-back.onrender.com";
+
 
   // ==================== helpers básicos ====================
   // Atajos para seleccionar elementos

@@ -1,7 +1,8 @@
 // js/app.js — Navbar + badges + carrito por usuario + modal acceso
 (() => {
   // URL base de mi API
-  const API = "http://127.0.0.1:4000";
+const API = "https://vivero-back.onrender.com";
+
   // Atajo rápido para buscar un elemento en el DOM
   const $  = (s) => document.querySelector(s);
 
