@@ -1,0 +1,614 @@
+<!-- inicio.html: Página principal del Vivero Nuevo Renacer -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Configuración básica de codificación y vista en dispositivos móviles -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Título que se muestra en la pestaña del navegador -->
+  <title>Vivero Nuevo Renacer | Plantas y accesorios para tu hogar</title>
+
+  <!-- Descripción para SEO y vista previa en buscadores -->
+  <meta name="description" content="Compra plantas de interior y exterior, orquídeas, monstera y más. Envíos locales, asesoría personalizada y stock actualizado." />
+
+  <!-- Color del navegador en móviles -->
+  <meta name="theme-color" content="#2d6a4f" />
+
+  <!-- CSS de Bootstrap desde CDN para usar su sistema de estilos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Iconos de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Animaciones AOS (Animate On Scroll) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"/>
+  <!-- Mi hoja de estilos personalizada -->
+  <link rel="stylesheet" href="css/estilos.css" />
+
+  <!-- Metadatos Open Graph para compartir en redes sociales -->
+  <meta property="og:title" content="Vivero Nuevo Renacer" />
+  <meta property="og:description" content="Las mejores plantas para tu hogar y jardín." />
+  <meta property="og:type" content="website" />
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <!-- Barra de navegación principal del sitio -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+  <div class="container">
+    <!-- Logo + nombre del vivero que lleva al inicio -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="inicio.html">
+      <img
+        src="images/iconovivero.png"
+        alt="Vivero Nuevo Renacer"
+        class="brand-logo"
+        loading="eager"
+        decoding="async"
+      />
+      <span>Vivero Nuevo Renacer</span>
+    </a>
+
+    <!-- Botón para colapsar menú en pantallas pequeñas -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Mostrar navegación">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Enlaces del menú de navegación -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <!-- Link a la página de inicio (activo) -->
+        <li class="nav-item"><a class="nav-link active" href="inicio.html">Inicio</a></li>
+        <!-- Link al catálogo -->
+        <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+        <!-- Scroll hacia la sección de contacto -->
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        <!-- Scroll hacia la sección de ubicación -->
+        <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
+
+        <!-- Carrito -->
+        <!-- Botón que abre el offcanvas del carrito -->
+        <li class="nav-item">
+          <button class="btn btn-light position-relative"
+                  data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+            <i class="bi bi-bag"></i>
+            <!-- Contador de productos en el carrito -->
+            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+          </button>
+        </li>
+
+        <!-- Sin sesión -->
+        <!-- Botones para iniciar sesión o registrarse cuando el usuario NO ha iniciado sesión -->
+        <li id="nav-auth-only" class="nav-item d-flex gap-2">
+          <a class="btn btn-light" href="login.html">Iniciar sesión</a>
+          <a class="btn btn-outline-light" href="registro.html">Registrarse</a>
+        </li>
+
+        <!-- Con sesión: icono → nombre → flecha -->
+        <!-- Menú desplegable que se muestra cuando el usuario está logueado -->
+        <li id="nav-profile" class="nav-item dropdown d-none ms-lg-2">
+          <a class="nav-link dropdown-toggle no-caret d-flex align-items-center gap-2 nav-profile-trigger"
+             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle fs-5"></i>
+            <!-- Aquí muestro el nombre de usuario cuando está en desktop -->
+            <span id="nav-username" class="d-none d-lg-inline">Mi perfil</span>
+            <i class="bi bi-caret-down-fill"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <!-- Enlace al perfil del usuario -->
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2" href="perfil.html">
+                <i class="bi bi-person-gear"></i> Mi perfil
+              </a>
+            </li>
+           
+            <!-- Enlace a la lista de favoritos -->
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2" href="wishlist.html">
+                <i class="bi bi-heart"></i> Mis favoritos
+              </a>
+            </li>
+            <!-- Enlace al panel de administrador (solo visible para admins, lo manejo con JS) -->
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 d-none" id="nav-admin" href="admin.html">
+                <i class="bi bi-speedometer2"></i> Panel administrador
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <!-- Botón para cerrar sesión -->
+            <li>
+              <button class="dropdown-item text-danger d-flex align-items-center gap-2" id="btn-logout" type="button">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+  <!-- Hero Carrusel -->
+  <!-- Carrusel principal de imágenes destacadas (hero) -->
+  <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000" data-bs-pause="hover" aria-label="Promociones y destacados">
+    <!-- Indicadores del carrusel (los puntitos de navegación) -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Slides del carrusel -->
+    <div class="carousel-inner">
+      <!-- Slide 1: imagen principal del vivero -->
+      <div class="carousel-item active hero-slide" role="img" aria-label="Monstera tropical verde" style="background-image:url('images/viverorenacerprincipal.jpeg')">
+        <!-- Capa oscura encima de la imagen para mejorar contraste del texto -->
+        <div class="hero-overlay"></div>
+        <div class="carousel-caption">
+          <div class="caption-box">
+            <h1>Bienvenido al Vivero Nuevo Renacer</h1>
+            <p>Plantas de interior y exterior para transformar tus espacios.</p>
+            <!-- Botón que lleva directo al catálogo -->
+            <a href="catalogo.html" class="btn btn-custom btn-lg">Explorar catálogo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: orquídeas -->
+      <div class="carousel-item hero-slide" role="img" aria-label="Orquídeas elegantes en flor" style="background-image:url('images/inicio2.jpeg')">
+        <div class="hero-overlay"></div>
+        <div class="carousel-caption">
+          <div class="caption-box">
+            <h1>Orquídeas Elegantes</h1>
+            <p>Color, elegancia y vida para tu hogar.</p>
+            <a href="catalogo.html" class="btn btn-custom btn-lg">Ver orquídeas</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: helechos -->
+      <div class="carousel-item hero-slide" role="img" aria-label="Helechos frescos para tu sala o jardín" style="background-image:url('images/inicio3.jpeg ')">
+        <div class="hero-overlay"></div>
+        <div class="carousel-caption">
+          <div class="caption-box">
+            <h1>Helechos Frescos</h1>
+            <p>La naturaleza a un clic de distancia.</p>
+            <!-- Botón que lleva al catálogo de forma general -->
+            <a href="catalogo.html?" class="btn btn-custom btn-lg">Comprar ahora</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles para pasar al slide anterior/siguiente -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" aria-label="Anterior">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" aria-label="Siguiente">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- Por qué elegirnos -->
+  <!-- Sección con 3 ventajas principales del vivero -->
+  <section class="container py-5" data-aos="fade-up">
+    <div class="row text-center g-4">
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="bi bi-truck fs-1"></i>
+          <h3 class="h5 mt-3">Envíos locales</h3>
+          <p class="mb-0">Entrega segura y rápida en tu zona.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="bi bi-shield-check fs-1"></i>
+          <h3 class="h5 mt-3">Garantía de calidad</h3>
+          <p class="mb-0">Plantas seleccionadas y saludables.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="bi bi-chat-dots fs-1"></i>
+          <h3 class="h5 mt-3">Asesoría</h3>
+          <p class="mb-0">Te ayudamos a elegir y cuidar tus plantas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- ¿Quiénes somos? -->
+<!-- Sección de presentación del vivero (sobre nosotros) -->
+<section id="quienes-somos" class="about-section py-5 py-lg-6">
+  <div class="container">
+    <div class="row align-items-center gy-4">
+      <!-- Imagen a la izquierda -->
+      <div class="col-lg-6" data-aos="fade-right">
+        <picture>
+          <!-- Si tuviera versión webp, se podría usar aquí como fuente principal -->
+         
+          <!-- Alternativas por si la tengo en .png o .jpg -->
+          <source srcset="images/quienesomos.jpg" type="image/jpg">
+          <img
+            src="images/quienesomos.jpg"
+            class="img-fluid rounded-4 shadow-lg object-fit-cover"
+            alt="Equipo del Vivero Nuevo Renacer"
+            loading="lazy"
+            style="max-height: 420px; width: 100%;"
+            onerror="this.src='images/quienesomos.jpg'; this.onerror=null;"
+          />
+        </picture>
+      </div>
+
+      <!-- Texto a la derecha -->
+      <div class="col-lg-6" data-aos="fade-left">
+        <!-- Etiqueta visual "Nosotros" -->
+        <span class="badge rounded-pill text-success bg-success bg-opacity-10 mb-2">
+          <i class="bi bi-flower1 me-1"></i> Nosotros
+        </span>
+        <h2 class="h1 fw-semibold mb-3">¿Quiénes somos?</h2>
+
+        <!-- Párrafo principal explicando quiénes somos -->
+        <p class="lead text-muted mb-3">
+          Somos <strong>Vivero Nuevo Renacer</strong>, un equipo de amantes de las plantas que
+          cultiva, selecciona y cuida cada especie para que llegue a tus manos con la mejor calidad.
+          Trabajamos de la mano con productores locales, fomentamos prácticas sostenibles y
+          acompañamos a nuestros clientes con <em>asesoría honesta</em> para que sus plantas
+          prosperen de verdad.
+        </p>
+
+        <!-- Lista de puntos fuertes del vivero -->
+        <ul class="list-unstyled about-bullets mb-4">
+          <li class="d-flex align-items-start gap-2 mb-2">
+            <i class="bi bi-check2-circle fs-5 text-success"></i>
+            <span>Plantas cultivadas localmente y seleccionadas una a una.</span>
+          </li>
+          <li class="d-flex align-items-start gap-2 mb-2">
+            <i class="bi bi-check2-circle fs-5 text-success"></i>
+            <span>Prácticas responsables: sustratos de calidad y manejo sostenible.</span>
+          </li>
+          <li class="d-flex align-items-start gap-2">
+            <i class="bi bi-check2-circle fs-5 text-success"></i>
+            <span>Asesoría personalizada para que tu espacio verde crezca sano.</span>
+          </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Categorías -->
+  <!-- Sección de chips para filtrar por categorías rápidas en el catálogo -->
+  <section id="categorias" class="container py-5 text-center" data-aos="fade-up">
+    <h2 class="text-center mb-4">Explora por categorías</h2>
+    <div class="category-chips d-flex justify-content-center flex-wrap gap-2">
+      <!-- Cada botón lleva al catálogo prefiltrado por query (q) -->
+      <a href="catalogo.html?q=frutales" class="btn btn-chip">Frutales</a>
+      <a href="catalogo.html?q=aguacates" class="btn btn-chip">Aguacates</a>
+      <a href="catalogo.html?q=cacao" class="btn btn-chip">Cacaos</a>
+      <a href="catalogo.html?q=maderables" class="btn btn-chip">maderables</a>
+      <a href="catalogo.html?q=ornamentales" class="btn btn-chip">Ornamentales</a>
+    </div>
+  </section>
+
+  <!-- Catálogo Destacado -->
+  <!-- Sección de productos destacados fija en el inicio -->
+  <main id="contenido">
+    <section id="catalogo" class="container py-5" data-aos="fade-up" data-aos-duration="1000">
+      <h2 class="text-center mb-4"> Plantas Destacadas </h2>
+
+      <div class="row g-4">
+        <!-- Tarjeta destacada: Monstera -->
+        <div class="col-sm-6 col-md-4">
+          <div class="card product-card h-100 shadow-sm">
+            <div class="position-relative">
+              <img src="images/monstera.jpg" alt="Monstera deliciosa, planta tropical de interior" class="card-img-top" loading="lazy">
+              <!-- Etiqueta de stock disponible -->
+              <span class="badge stock-badge bg-success">En stock</span>
+            </div>
+            <div class="card-body d-flex flex-column text-center">
+              <h5 class="card-title mb-1">Monstera</h5>
+              <p class="text-muted small mb-2">Planta tropical ideal para interiores.</p>
+              <p class="price mb-3">$18.990</p>
+              <div class="mt-auto">
+                <!-- Enlace para ver la Monstera directamente en el catálogo filtra por query -->
+                <a class="btn btn-custom w-100" href="catalogo.html?q=monstera">Ver en catálogo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta destacada: Orquídea -->
+        <div class="col-sm-6 col-md-4">
+          <div class="card product-card h-100 shadow-sm">
+            <div class="position-relative">
+              <img src="images/orquidea.jpg" alt="Orquídea phalaenopsis en flor" class="card-img-top" loading="lazy">
+              <!-- Etiqueta cuando hay pocas unidades -->
+              <span class="badge stock-badge bg-warning text-dark">Pocas unidades</span>
+            </div>
+            <div class="card-body d-flex flex-column text-center">
+              <h5 class="card-title mb-1">Orquídea</h5>
+              <p class="text-muted small mb-2">Flor elegante y colorida.</p>
+              <p class="price mb-3">$22.990</p>
+              <div class="mt-auto">
+                <a class="btn btn-custom w-100" href="catalogo.html?q=orquídea">Ver en catálogo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta destacada: Helecho -->
+        <div class="col-sm-6 col-md-4">
+          <div class="card product-card h-100 shadow-sm">
+            <div class="position-relative">
+              <img src="images/helecho.jpg" alt="Helecho verde fresco" class="card-img-top" loading="lazy">
+              <!-- Etiqueta cuando ya no hay stock -->
+              <span class="badge stock-badge bg-secondary">Sin stock</span>
+            </div>
+            <div class="card-body d-flex flex-column text-center">
+              <h5 class="card-title mb-1">Helecho</h5>
+              <p class="text-muted small mb-2">Perfecto para ambientes frescos.</p>
+              <p class="price mb-3">$12.990</p>
+              <div class="mt-auto">
+                <a class="btn btn-custom w-100" href="catalogo.html?q=helecho">Ver en catálogo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+<!-- ==================== Ubicación ==================== -->
+<!-- Sección donde muestro la ubicación del vivero y embebo Google Maps -->
+<section id="ubicacion" class="location-section py-5 py-lg-6">
+  <div class="container">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <!-- Dirección (izquierda) -->
+      <div class="col-lg-6" data-aos="fade-right">
+        <h2 class="h3 h2-lg mb-2">¿Dónde estamos?</h2>
+        <div class="brand-underline mb-3"></div>
+
+        <!-- Aquí guardo la dirección y coordenadas en un data-attribute para usarlas en el script -->
+        <div id="shopAddress"
+             class="p-3 p-md-4 rounded-4 shadow-sm bg-white mb-3"
+             data-address="7.9302319, -72.5877884", El Zulia, Norte de Santander – Colombia">
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-geo-alt text-success fs-3"></i>
+            <div>
+              <div class="fw-semibold">Vivero Nuevo Renacer</div>
+              <address class="mb-0 text-body-secondary">
+                Vereda 1 de Mayo, El Zulia, Norte de Santander – Colombia
+              </address>
+            </div>
+          </div>
+          <hr class="my-3">
+          <ul class="list-unstyled mb-0">
+            <!-- Horarios de atención del vivero -->
+            <li class="d-flex align-items-center gap-2 mb-1">
+              <i class="bi bi-clock text-success"></i>
+              <span>  Lun–Dom: 7:00 a.m. – 12:00 p.m. | 1:00 p.m. – 5:00 p.m.</span>
+            </li>
+           
+          </ul>
+        </div>
+
+        <!-- Botones de acción relacionados con la ubicación -->
+        <div class="d-flex flex-wrap gap-2">
+          <!-- Botón que abre Google Maps en modo búsqueda -->
+          <a id="btnOpenMaps" class="btn btn-custom" target="_blank" rel="noopener">
+            <i class="bi bi-map"></i> Abrir en Google Maps
+          </a>
+          <!-- Botón que abre Google Maps en modo “cómo llegar” -->
+          <a id="btnDirections" class="btn btn-outline-success" target="_blank" rel="noopener">
+            <i class="bi bi-signpost-2"></i> Cómo llegar
+          </a>
+          <!-- Botón para copiar la dirección al portapapeles -->
+          <button id="btnCopyAddress" class="btn btn-outline-secondary">
+            <i class="bi bi-clipboard"></i> Copiar dirección
+          </button>
+        </div>
+      </div>
+
+      <!-- Mapa (derecha) -->
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="ratio ratio-4x3 rounded-4 overflow-hidden shadow-sm">
+          <!-- El src del iframe se rellena dinámicamente desde el script usando la dirección -->
+          <iframe id="mapFrame"
+                  class="w-100 h-100 border-0"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==================  Ubicación ==================== -->
+
+<!-- Script para configurar los enlaces y el mapa de Google Maps usando la dirección -->
+<script>
+(() => {
+  const addrEl = document.getElementById('shopAddress');
+  const address = addrEl?.dataset.address || 'Vivero Nuevo Renacer, Colombia';
+
+  // Armamos URLs de Google
+  const mapsSearch = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+  const mapsDir    = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(address);
+  const mapsEmbed  = 'https://www.google.com/maps?q=' + encodeURIComponent(address) + '&output=embed';
+
+  // Asigno las URLs a los botones y al iframe del mapa
+  document.getElementById('btnOpenMaps')?.setAttribute('href', mapsSearch);
+  document.getElementById('btnDirections')?.setAttribute('href', mapsDir);
+  document.getElementById('mapFrame')?.setAttribute('src', mapsEmbed);
+
+  // Copiar al portapapeles
+  document.getElementById('btnCopyAddress')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+      // Si tengo un toast global, lo uso, si no hago un alert de respaldo
+      const t = document.getElementById('toast');
+      if (t && window.bootstrap) {
+        const body = t.querySelector('.toast-body');
+        if (body) body.textContent = 'Dirección copiada';
+        window.bootstrap.Toast.getOrCreateInstance(t, { delay: 1400 }).show();
+      } else {
+        alert('Dirección copiada');
+      }
+    } catch {
+      alert('No se pudo copiar la dirección');
+    }
+  });
+})();
+</script>
+
+<!-- Contacto -->
+<!-- Sección de contacto con imagen, texto y botones de acción -->
+<section id="contacto" class="contacto-section container my-5" data-aos="fade-up">
+  <div class="row g-0 rounded-4 overflow-hidden shadow-lg bg-white align-items-stretch">
+    
+    <!-- Imagen a la izquierda (foto representativa del vivero o atención) -->
+    <div class="col-lg-6">
+      <div class="contacto-foto h-100">
+        <img
+          src="images/perrito.jpeg"
+          alt="Atención en el Vivero"
+          class="w-100 h-100">
+      </div>
+    </div>
+
+    <!-- Texto + botones a la derecha -->
+    <div class="col-lg-6 p-4 p-lg-5 d-flex flex-column justify-content-center text-center text-lg-start">
+      <!-- Badge que resalta la atención personalizada -->
+      <span class="badge rounded-pill bg-success bg-opacity-10 text-success mb-3 align-self-center align-self-lg-start">
+        <i class="bi bi-patch-check-fill me-1"></i>Atención personalizada
+      </span>
+
+      <h2 class="h3 mb-2">¿Necesitas ayuda para elegir?</h2>
+      <p class="text-muted mb-3">Te asesoramos por WhatsApp o te esperamos en el vivero.</p>
+
+      <!-- Botón de WhatsApp con los datos (teléfono y mensaje) como atributos data-* -->
+      <a id="btnWhatsApp"
+         class="btn btn-whatsapp px-4 mt-2 align-self-center align-self-lg-start"
+         data-phone="+57 321 926 1465"
+         data-msg="Hola, vengo del sitio web y quiero asesoría para elegir plantas."
+         href="#"
+         target="_blank" rel="noopener">
+        <i class="bi bi-whatsapp me-2"></i>Contactar por WhatsApp
+      </a>
+
+      <!-- Botones Llamar y Correo (añadidos) -->
+      <div class="d-flex flex-wrap gap-2 mt-3 align-self-center align-self-lg-start">
+        <!-- Botón para realizar llamada directa desde el móvil -->
+        <a class="btn btn-outline-secondary"
+           href="tel:+573219261465">
+          <i class="bi bi-telephone me-1"></i>Llamar
+        </a>
+        <!-- Botón para abrir el cliente de correo con el email del vivero -->
+        <a class="btn btn-outline-secondary"
+           href="mailto:viveronuevorenacer@gmail.com">
+          <i class="bi bi-envelope me-1"></i>Correo
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Footer -->
+  <!-- Pie de página con derechos de autor y frase final -->
+  <footer class="mt-auto text-center p-4">
+    <p class="mb-1">© 2025 Vivero Nuevo Renacer — Todos los derechos reservados</p>
+    <small class="text-opacity-75">Hecho con ❤️ y muchas plantas</small>
+  </footer>
+
+  <!-- Offcanvas Carrito -->
+  <!-- Panel lateral del carrito de compras -->
+   <div class="offcanvas offcanvas-end"
+     tabindex="-1"
+     id="offcanvasCart"
+     aria-labelledby="offcanvasCartLabel"
+     data-bs-scroll="true"
+     data-bs-backdrop="false">
+    <div class="offcanvas-header">
+      <h5 id="offcanvasCartLabel" class="mb-0">Tu carrito</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body">
+      <!-- Lista de productos en el carrito (se rellena con JS) -->
+      <ul id="cart-list" class="list-group mb-3"></ul>
+      <div class="d-flex justify-content-between align-items-center">
+        <strong>Total:</strong> <span id="cart-total">$0</span>
+      </div>
+      <hr>
+      <!-- Botón para enviar el pedido por WhatsApp con el contenido del carrito -->
+      <button id="btnCartWhatsApp"
+        class="btn btn-custom w-100"
+        type="button"
+        data-phone="+57 321 926 1465">
+  <i class="bi bi-whatsapp me-2"></i>Enviar pedido por WhatsApp
+</button>
+
+    </div>
+  </div>
+
+  <!-- Modal “requiere sesión” -->
+  <!-- Modal que uso como puerta de autenticación para favoritos y carrito -->
+  <div class="modal fade" id="authGateModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg border-0 rounded-4">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">¡Bienvenido! 👋</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body pt-0">
+          <p class="mb-3">Para usar <strong>favoritos</strong> y el <strong>carrito</strong> necesitas iniciar sesión.</p>
+          <div class="d-grid gap-2">
+            <a href="login.html" class="btn btn-success">Iniciar sesión</a>
+            <a href="registro.html" class="btn btn-outline-success">Crear cuenta</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS + AOS + App -->
+  <!-- JS de Bootstrap (bundle con Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+  <!-- JS de la librería AOS para animaciones -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
+  <!-- Script principal de la app donde manejo navbar, carrito, auth, etc. -->
+  <script src="js/app.js?v=navbar-fix" defer></script>
+
+  <!-- Mensaje para usuarios que tienen desactivado JavaScript -->
+  <noscript>Activa JavaScript para una mejor experiencia.</noscript>
+
+  <!-- Script que construye el enlace de WhatsApp dinámicamente a partir de los data-attributes -->
+  <script>
+  (function () {
+    const btn = document.getElementById('btnWhatsApp');
+    if (!btn) return;
+
+    // Número: dejo solo dígitos (y el +) para asegurar que el formato sea válido
+    const rawPhone = btn.dataset.phone || '';
+    const phone = rawPhone.replace(/[^\d+]/g, '');
+
+    // Mensaje que puse en data-msg
+    const msg = btn.dataset.msg || 'Hola, vengo del sitio web y quiero asesoría para elegir plantas. del sitio web.';
+
+    // URL oficial de WhatsApp con el número y el texto codificado
+    const url = `https://wa.me/${phone.replace('+','')}/?text=${encodeURIComponent(msg)}`;
+
+    // Asigno la URL final al href del botón
+    btn.setAttribute('href', url);
+  })();
+</script>
+
+</body>
+</html>

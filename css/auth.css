@@ -1,0 +1,148 @@
+/* ===== Altura/centrado ===== */
+:root { --nav-h: 64px; }
+@media (max-width: 992px){ :root { --nav-h: 56px; } }
+
+.auth-canvas{
+  min-height: calc(100svh - var(--nav-h));
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(82,183,136,.22), transparent 60%),
+    radial-gradient(1200px 600px at 110% 110%, rgba(45,106,79,.18), transparent 60%),
+    #f4f9f4;
+  display: grid;
+  place-items: center;
+  padding: clamp(24px, 3vw, 40px) 16px;
+}
+
+.container-auth{
+  width: min(1100px, 96vw);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(16px, 3vw, 28px);
+  align-items: stretch;
+}
+@media (max-width: 992px){
+  .container-auth{ grid-template-columns: 1fr; }
+}
+
+/* ===== Panel visual ===== */
+.auth-visual{
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: url('../images/trabajorvivero.jpeg') center/cover no-repeat;
+  box-shadow: var(--shadow-sm);
+}
+.visual-overlay{
+  position: absolute; inset: 0;
+  background: linear-gradient(150deg, rgba(0,0,0,.45), rgba(0,0,0,.25) 60%, rgba(0,0,0,.15));
+}
+.visual-content{
+  position: relative; z-index: 1; color:#fff; height:100%;
+  padding: clamp(20px, 3vw, 32px);
+  display: grid; align-content: center; gap: 16px;
+}
+.visual-badge{
+  width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(255,255,255,.2); backdrop-filter: blur(2px);
+  font-size: 1.15rem;
+}
+.visual-content h2{ font-weight: 800; letter-spacing: .2px; margin: 0; }
+.text-opacity{ opacity:.95; margin:0; }
+.benefits{ list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.benefits li{ display: flex; align-items:center; gap: 10px; }
+.benefits i{ font-size: 1.1rem; }
+
+/* ===== Tarjeta con borde degradado ===== */
+.auth-card{
+  border-radius: 20px;
+  background:
+    linear-gradient(#ffffffcc, #ffffffcc) padding-box,
+    linear-gradient(135deg, #b9f6d0, #2d6a4f) border-box;
+  border: 1px solid transparent;
+  box-shadow: 0 20px 50px rgba(0,0,0,.08);
+  display: grid;
+}
+.auth-card__inner{
+  border-radius: 18px;
+  padding: clamp(20px, 3vw, 28px);
+  backdrop-filter: blur(6px);
+}
+body[data-theme="dark"] .auth-card{
+  background:
+    linear-gradient(#111816e6, #111816e6) padding-box,
+    linear-gradient(135deg, #2d6a4f, #b9f6d0) border-box;
+}
+
+/* Marca */
+.brand-mark{
+  width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--green-100);
+  color: var(--green-800);
+  margin: 0 auto 8px;
+  font-size: 1.25rem;
+}
+
+/* ===== Inputs y validaciones ===== */
+.form-control{ border-radius: 12px; }
+.form-control:focus{
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 .2rem rgba(82,183,136,.20);
+}
+.form-control.is-invalid{
+  border-color: #dc3545;
+  box-shadow: 0 0 0 .2rem rgba(220,53,69,.12);
+}
+
+/* ===== Botón “ojo” FUERA del campo ===== */
+.btn-eye{
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(45,106,79,.18);
+  background: #ffffff;
+  color: #6c757d;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .05s ease;
+}
+.btn-eye:hover{
+  background: #eaf8f0; color: var(--green-800); border-color: rgba(45,106,79,.3);
+}
+.btn-eye:active{ transform: scale(.98); }
+.btn-eye:focus-visible{ outline: none; box-shadow: 0 0 0 .18rem rgba(82,183,136,.28); }
+body[data-theme="dark"] .btn-eye{
+  background: #17221d; border-color: rgba(255,255,255,.12); color: #c7d2cc;
+}
+body[data-theme="dark"] .btn-eye:hover{
+  background: #1e2b25; color: #b9f6d0;
+}
+
+/* ===== Fuerza de contraseña ===== */
+.strength{ position: relative; display: flex; align-items: center; gap: 10px; }
+.strength-bar{
+  flex: 1 1 auto; height: 8px; border-radius: 999px;
+  background: #e6ece9; position: relative; overflow: hidden;
+}
+.strength-bar::after{
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+  background: var(--green-500); border-radius: 999px; transition: width .25s ease, background-color .25s ease;
+}
+.strength-label{ font-size: .85rem; color: #6c757d; min-width: 110px; text-align: right; }
+.strength--weak  .strength-bar::after{ width: 25%; background: #dc3545; }
+.strength--fair  .strength-bar::after{ width: 50%; background: #fd7e14; }
+.strength--good  .strength-bar::after{ width: 75%; background: #ffc107; }
+.strength--strong.strength .strength-bar::after{ width: 100%; background: #28a745; }
+
+/* ===== Animación "shake" ante error ===== */
+@keyframes shake{
+  10%, 90%{ transform: translateX(-1px); }
+  20%, 80%{ transform: translateX(2px); }
+  30%, 50%, 70%{ transform: translateX(-4px); }
+  40%, 60%{ transform: translateX(4px); }
+}
+.shake{ animation: shake .32s cubic-bezier(.36,.07,.19,.97); }
+
+/* ===== Modal en modo oscuro ===== */
+body[data-theme="dark"] .modal-content{
+  background:#111816; color:#eaf1ed;
+}

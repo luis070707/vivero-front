@@ -1,0 +1,36 @@
+/* Encabezado suave */
+.wishlist-hero{
+  background: linear-gradient(180deg, rgba(82,183,136,.12), rgba(82,183,136,0));
+  padding: 24px 0;
+  border-bottom: 1px dashed rgba(45,106,79,.15);
+}
+
+/* Tarjeta de wishlist */
+.card.wish-card{
+  border: none;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card.wish-card:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+.wish-card img{
+  height: 180px; object-fit: cover; width: 100%;
+}
+
+/* Botones */
+.btn-outline-danger{ border-color: #d9534f; color: #d9534f; }
+.btn-outline-danger:hover{ background: #d9534f; color: #fff; }
+
+/* Estado vacío */
+.empty-state .empty-card{
+  max-width: 460px; padding: 24px; border-radius: 16px; background: #fff;
+  box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,.06);
+}
+.empty-emoji{ font-size: 48px; margin-bottom: 8px; }
+
+/* Modo oscuro */
+body[data-theme="dark"] .wishlist-hero{ background: linear-gradient(180deg, rgba(185,246,208,.06), rgba(185,246,208,0)); border-bottom-color: rgba(255,255,255,.08); }
+body[data-theme="dark"] .empty-state .empty-card{ background:#111816; border-color: rgba(255,255,255,.08); }

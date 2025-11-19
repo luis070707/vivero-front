@@ -1,0 +1,371 @@
+/* ====== Variables y resets ====== */
+:root{
+  --green-900:#1b4332;
+  --green-800:#2d6a4f;
+  --green-600:#40916c;
+  --green-500:#52b788;
+  --green-100:#e9f7ef;
+
+  --text-900:#1a1a1a;
+  --text-700:#3e3e3e;
+  --white:#ffffff;
+
+  --radius-lg:16px;
+  --radius-md:12px;
+  --shadow-sm:0 4px 14px rgba(0,0,0,.08);
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  color: var(--text-900);
+  background-color:#f4f9f4;
+  line-height:1.5;
+}
+
+[data-theme="dark"] body,
+body[data-theme="dark"]{
+  background:#101614;
+  color:#f3f6f4;
+}
+
+/* ====== Accesibilidad ====== */
+.skip-link{
+  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+}
+.skip-link:focus{
+  position:static; width:auto; height:auto; margin:8px; padding:6px 10px; background:#fff; border:1px solid var(--green-600); border-radius:6px;
+}
+
+/* ====== Navbar ====== */
+.navbar{
+  background-color: var(--green-800);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+.navbar .nav-link{ color:#fff !important; font-weight:600; }
+.navbar .nav-link.active{ text-decoration: underline; text-underline-offset: 6px; }
+.navbar-brand{ color:#fff !important; font-weight:800; }
+.navbar .btn-outline-light{ border-color:#fff; }
+
+/* Cambia estilo al hacer scroll */
+.navbar.scrolled{
+  box-shadow: var(--shadow-sm);
+}
+
+/* ====== Hero ====== */
+.hero-slide{
+  height: clamp(420px, 60vh, 640px);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: var(--white);
+  text-align:center;
+}
+.hero-overlay{
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
+}
+
+/* Centramos la caption y movemos el fondo al wrapper .caption-box */
+.carousel-caption{
+  position: absolute;
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%,-50%);
+  width: auto;
+  text-align: center;
+  padding: 0;                         /* el padding va en .caption-box */
+  background: transparent !important; /* el fondo va en .caption-box */
+}
+
+/* Recuadro negro uniforme para TODOS los slides */
+.caption-box{
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  padding: clamp(14px, 2vw, 28px) clamp(18px, 3vw, 36px);
+  background: rgba(0,0,0,.45);
+  border-radius: 14px;
+  backdrop-filter: blur(3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+  max-width: min(90vw, 760px);
+}
+.caption-box h1,
+.caption-box p{ margin:0; }
+.caption-box p{ opacity: .95; }
+
+/* ====== Chips de categoría ====== */
+.btn-chip{
+  background: var(--green-100);
+  color: var(--green-800);
+  border: none;
+  border-radius: 999px;
+  padding: .5rem 1rem;
+  white-space: nowrap;
+  transition: transform .2s ease;
+}
+.btn-chip:hover{ transform: translateY(-2px); }
+
+/* Centrado de chips + buen comportamiento en móvil */
+.category-chips{ justify-content: center; }
+@media (max-width: 576px){
+  .category-chips{
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding-bottom: .25rem;
+  }
+  .category-chips > *{ flex: 0 0 auto; }
+}
+
+/* ====== Cards de producto ====== */
+.card{
+  border: none;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+
+.product-card img{
+  height: 220px; width:100%;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  display:block;
+}
+.wishlist-btn{
+  position:absolute; top:10px; right:10px;
+  border: none; background: rgba(255,255,255,.85);
+  border-radius: 999px; width: 40px; height: 40px;
+  display:grid; place-items:center; cursor:pointer;
+}
+.wishlist-btn:hover{ background:#fff; }
+
+.stock-badge{
+  position:absolute; left:10px; top:10px;
+  border-radius: 999px;
+  padding: .4rem .6rem;
+}
+.price{
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--green-800);
+}
+
+/* ====== Features ====== */
+.feature-card{
+  background:#fff;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ====== Botones ====== */
+.btn-custom{
+  background-color: var(--green-500);
+  color: var(--white);
+  font-weight: 700;
+  border-radius: 999px;
+  transition: transform .15s ease, background-color .2s ease;
+}
+.btn-custom:hover{ background-color: var(--green-600); transform: translateY(-1px); }
+
+/* ====== Bloques suaves ====== */
+.bg-soft{
+  background: #eaf8f0;
+}
+
+/* ====== Footer ====== */
+footer{
+  background-color: var(--green-800);
+  color: var(--white);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+/* ====== Modo oscuro ====== */
+body[data-theme="dark"] .navbar{ background-color:#0e2a21; }
+body[data-theme="dark"] .feature-card{ background:#0f1513; }
+body[data-theme="dark"] .bg-soft{ background:#0f1614; }
+body[data-theme="dark"] .btn-chip{ background:#13201b; color:#e4f1ea; }
+body[data-theme="dark"] .price{ color:#b9f6d0; }
+body[data-theme="dark"] footer{ background-color:#0e2a21; }
+
+/* ====== Animaciones reducidas ====== */
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+}
+/* Navbar moderna */
+.navbar-green {
+  background: linear-gradient(90deg, #2E7D32, #2E7D32 60%, #2E7D32);
+}
+.navbar-green .navbar-brand { font-weight: 600; letter-spacing:.2px; }
+.navbar-green .brand-leaf { transform-origin: center; display:inline-block; transition: transform .25s ease; }
+.navbar-green .navbar-brand:hover .brand-leaf { transform: rotate(-12deg) scale(1.06); }
+
+.nav-icon-btn i { font-size: 1.2rem; color: #fff; transition: transform .15s ease, opacity .15s ease; }
+.nav-icon-btn:hover i { transform: translateY(-1px) scale(1.05); opacity: .9; }
+.badge-floating {
+  position:absolute; top:-6px; right:-6px; background:#ff3b30; color:#fff;
+  font-size:.72rem; border-radius: 10px; padding: .15rem .35rem;
+}
+.nav-cta { transition: transform .15s ease; }
+.nav-cta:hover { transform: translateY(-1px); }
+
+/* Avatar simple */
+.avatar-circle {
+  width: 28px; height: 28px; display:inline-flex; align-items:center; justify-content:center;
+  background:#e8f5e9; color:#2e7d32; border-radius:50%; font-weight:600; font-size:.9rem;
+}
+
+/* Banner de login requerido */
+.auth-banner { background: #f1f8e9; border-bottom: 1px solid #dcedc8; }
+/* -- Arreglos Navbar/Dropdown sobre carrusel y demás -- */
+.navbar { position: relative; z-index: 1055; } /* sobre carrusel/indicators */
+.navbar .dropdown-menu { z-index: 2000; }     /* perfil desplegable encima */
+
+/* -- Modal de acceso (bonito) -- */
+.modal-backdrop.show { backdrop-filter: blur(2px); } /* difumina el fondo */
+#authGateModal .modal-content { border-radius: 1rem; }
+#authGateModal .modal-title { font-weight: 700; }
+/* Oculta el caret por defecto de Bootstrap y usamos el nuestro junto al ícono */
+.navbar .dropdown-toggle.no-caret::after { display: none; }
+
+/* Opcional: alinear mejor el target del dropdown */
+.navbar .dropdown-toggle { padding-right: .25rem; }
+/* Quitar caret nativo y pequeño ajuste del trigger */
+.navbar .dropdown-toggle.no-caret::after { display: none; }
+.navbar .dropdown-toggle { padding-right: .25rem; }
+
+/* ===== Contenedor del dropdown: fijado a la derecha y animado ===== */
+.navbar .dropdown-menu {
+  /* aseguramos anclaje a la derecha (como .dropdown-menu-end) */
+  right: 0 !important;
+  left: auto !important;
+
+  /* para poder animar sin display:none */
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+
+  /* animación: solo Y + opacidad (sin scale para evitar “jitter”) */
+  opacity: 0;
+  transform: translateY(10px);
+  transform-origin: top right;
+  transition: opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
+  will-change: opacity, transform;
+}
+
+.navbar .dropdown-menu.show {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .22s ease, transform .22s ease, visibility 0s;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.12));
+}
+
+/* ===== Stagger de cada opción (Mi perfil, Pedidos, etc.) ===== */
+.navbar .dropdown-menu > li {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.navbar .dropdown-menu.show > li { animation: ddItem .28s ease forwards; }
+.navbar .dropdown-menu.show > li:nth-child(1) { animation-delay: 40ms; }
+.navbar .dropdown-menu.show > li:nth-child(2) { animation-delay: 80ms; }
+.navbar .dropdown-menu.show > li:nth-child(3) { animation-delay: 120ms; }
+.navbar .dropdown-menu.show > li:nth-child(4) { animation-delay: 160ms; }
+.navbar .dropdown-menu.show > li:nth-child(5) { animation-delay: 200ms; }
+.navbar .dropdown-menu.show > li:nth-child(6) { animation-delay: 240ms; }
+.navbar .dropdown-menu.show > li:nth-child(7) { animation-delay: 280ms; }
+
+@keyframes ddItem {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Flecha que rota al abrir */
+.nav-profile-trigger .bi-caret-down-fill { transition: transform .22s ease; }
+.nav-item.dropdown.show .nav-profile-trigger .bi-caret-down-fill,
+.nav-profile-trigger[aria-expanded="true"] .bi-caret-down-fill { transform: rotate(180deg); }
+
+/* Respeto a usuarios con motion reducido */
+@media (prefers-reduced-motion: reduce) {
+  .navbar .dropdown-menu,
+  .navbar .dropdown-menu > li,
+  .nav-profile-trigger .bi-caret-down-fill {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* Logo navbar */
+.navbar .brand-logo{
+  height: 32px;      /* alto base en mobile */
+  width: auto;       /* mantiene proporción */
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+}
+@media (min-width: 992px){
+  .navbar .brand-logo{ height: 36px; }
+}
+/* === Vista Rápida (Quick View) === */
+/* Difumino el fondo del modal */
+.modal-backdrop.show {
+  backdrop-filter: blur(3px);
+}
+
+/* Imagen dentro del quick view sin deformación */
+#quickView .object-fit-cover {
+  object-fit: cover;
+}
+
+/* Botón de cerrar (X) por encima de la imagen */
+#quickView .btn-close {
+  filter: invert(0); /* en tema oscuro podrías invertirlo si lo necesitas */
+}
+
+/* Scroll suave en descripción */
+#quickView #qvDesc { scrollbar-width: thin; }
+/* ---------- ¿Quiénes somos? ---------- */
+.about-section {
+  background: linear-gradient(180deg, #f6fbf8 0%, #ffffff 100%);
+}
+
+.about-bullets i {
+  flex: 0 0 auto;
+  margin-top: 0.15rem;
+}
+
+/* Ajuste visual del título en pantallas grandes */
+@media (min-width: 992px) {
+  #quienes-somos .lead { max-width: 50ch; }
+}
+
+/* Por si tu build no trae .rounded-4 */
+.rounded-4 { border-radius: 1rem; }
+.offcanvas,
+.offcanvas-backdrop {
+  z-index: 2000 !important;
+}
+/* ===== Contacto – estilos finos ===== */
+.contacto-section .contacto-foto { min-height: 320px; }
+.contacto-section .contacto-foto img { object-fit: cover; display: block; }
+
+/* Botón WhatsApp con gradiente y elevación */
+.btn-whatsapp{
+  --tw: 0 10px 20px rgba(18,140,126,.15);
+  background: linear-gradient(135deg,#25D366,#128C7E);
+  border: 0;
+  box-shadow: var(--tw);
+  color: #fff;
+  transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+}
+.btn-whatsapp:hover{ filter: brightness(1.05); transform: translateY(-1px); box-shadow: 0 12px 24px rgba(18,140,126,.2); }
+.btn-whatsapp:active{ transform: translateY(0); }
+
+/* Mejoras sutiles */
+.contacto-section .badge{ font-weight: 600; }

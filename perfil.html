@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi perfil - Vivero Nuevo Renacer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <!-- (Si usas una navbar común, puedes pegarla aquí) -->
+
+  <main class="container my-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h1 class="h4 mb-0">Mi perfil</h1>
+      <a class="btn btn-outline-secondary btn-sm" href="javascript:history.back()">
+        <i class="bi bi-arrow-left"></i> Regresar
+      </a>
+    </div>
+
+    <div class="alert alert-info small">
+      Completa tus datos para coordinar envíos y contacto.
+    </div>
+
+    <form id="profileForm" class="row g-3 bg-white p-3 p-md-4 rounded-4 shadow-sm">
+      <div class="col-md-6">
+        <label class="form-label">Nombre completo</label>
+        <input id="full_name" class="form-control" maxlength="120" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input id="email" class="form-control" disabled>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Teléfono</label>
+        <input id="phone" class="form-control" maxlength="30" required>
+      </div>
+
+      <div class="col-md-8">
+        <label class="form-label">Dirección</label>
+        <input id="address_line1" class="form-control" maxlength="120" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Apto, bloque (opcional)</label>
+        <input id="address_line2" class="form-control" maxlength="120">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Ciudad</label>
+        <input id="city" class="form-control" maxlength="60" required>
+      </div>
+
+      <div class="col-12 d-flex gap-2">
+        <button class="btn btn-custom" type="submit"><i class="bi bi-save"></i> Guardar</button>
+      </div>
+    </form>
+  </main>
+
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    <div id="toastOK" class="toast border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">Perfil actualizado.</div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js?v=perfil-1"></script>
+  <script src="js/perfil.js?v=2"></script>
+</body>
+</html>

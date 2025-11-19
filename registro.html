@@ -1,0 +1,331 @@
+<!-- registro.html: Página para crear cuenta de usuario en Vivero Nuevo Renacer -->
+!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Configuración básica de codificación y diseño responsive -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Título que aparece en la pestaña del navegador -->
+  <title>Crear cuenta - Vivero Nuevo Renacer</title>
+
+  <!-- Descripción para buscadores/SEO -->
+  <meta name="description" content="Crea tu cuenta para comprar, guardar tu lista de deseos y gestionar tus pedidos en Vivero La Ceiba." />
+
+  <!-- Bootstrap + Icons: estilos base y set de iconos para toda la página -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Estilos globales y específicos de login/registro -->
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+ 
+ <!-- Navbar: barra de navegación superior -->
+ <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+  <div class="container">
+    <!-- Logo + nombre del vivero que redirige al inicio -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="inicio.html">
+      <img
+        src="images/iconovivero.png"
+        alt="Vivero Nuevo Renacer"
+        class="brand-logo"
+        loading="eager"
+        decoding="async"
+      />
+      <span>Vivero Nuevo Renacer</span>
+    </a>
+
+    <!-- Botón hamburguesa para colapsar el menú en pantallas pequeñas -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Mostrar navegación">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links de navegación -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="inicio.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+        <!-- Página actual: registro marcada como activa -->
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Registro</a></li>
+        <!-- Eliminados: enlace a Login y botón de modo oscuro -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Canvas del registro: layout principal con panel visual + tarjeta -->
+  <main class="auth-canvas">
+    <div class="container-auth">
+      <!-- Panel visual en el lado izquierdo (solo en pantallas grandes) -->
+      <aside class="auth-visual d-none d-lg-flex" style="background-image:url('images/fondo3.jpeg')">
+        <!-- Capa de oscurecimiento/overlay sobre la imagen -->
+        <div class="visual-overlay"></div>
+        <div class="visual-content">
+          <!-- Insignia con icono para reforzar la temática -->
+          <div class="visual-badge">🪴</div>
+          <h2>¡Crea tu cuenta!</h2>
+          <p class="text-opacity">Compra más rápido, guarda tus plantas favoritas y recibe recomendaciones.</p>
+          <!-- Lista de beneficios de tener cuenta -->
+          <ul class="benefits">
+            <li><i class="bi bi-gift"></i> Ofertas y cupones exclusivos</li>
+            <li><i class="bi bi-heart"></i> Lista de deseos sincronizada</li>
+            <li><i class="bi bi-box-seam"></i> Seguimiento de pedidos</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Tarjeta de registro (formulario principal) -->
+      <section class="auth-card">
+        <div class="auth-card__inner">
+          <!-- Encabezado de la tarjeta -->
+          <div class="text-center mb-3">
+            <!-- Marca visual redonda manejada por CSS -->
+            <div class="brand-mark"></div>
+            <h1 class="h4 mb-1">Crear cuenta</h1>
+            <p class="text-muted small mb-0">Únete a Vivero Nuevo Renacer</p>
+          </div>
+
+          <!-- Formulario de registro -->
+          <form id="registerForm" class="needs-validation" novalidate>
+            <!-- Nombre completo (opcional, no obligatorio para el backend) -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="fullName" placeholder="Nombre completo" maxlength="80">
+              <label for="fullName">Nombre completo (opcional)</label>
+            </div>
+
+            <!-- Usuario (requerido por backend) -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="regUsername" placeholder="usuario" required minlength="3" maxlength="40" autocomplete="username">
+              <label for="regUsername">Nombre de usuario</label>
+              <div class="invalid-feedback">Mínimo 3 caracteres (sin espacios).</div>
+            </div>
+
+            <!-- Correo electrónico -->
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="regEmail" placeholder="correo@ejemplo.com" required maxlength="120" autocomplete="email">
+              <label for="regEmail">Correo electrónico</label>
+              <div class="invalid-feedback">Ingresa un correo válido.</div>
+            </div>
+
+            <!-- Contraseña + botón de ojo fuera del input -->
+            <div class="d-flex align-items-stretch gap-2 mb-2">
+              <div class="form-floating flex-grow-1">
+                <input type="password" class="form-control" id="regPassword" placeholder="Contraseña" required minlength="6" maxlength="72" autocomplete="new-password">
+                <label for="regPassword">Contraseña</label>
+                <div class="invalid-feedback">Mínimo 6 caracteres.</div>
+              </div>
+              <!-- Botón para mostrar/ocultar la contraseña -->
+              <button type="button" class="btn btn-eye" id="toggleRegPassword" aria-label="Mostrar u ocultar contraseña" style="border:none;outline:none;box-shadow:none">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+
+            <!-- Confirmar contraseña + botón de ojo fuera -->
+            <div class="d-flex align-items-stretch gap-2">
+              <div class="form-floating flex-grow-1">
+                <input type="password" class="form-control" id="regConfirm" placeholder="Confirmar contraseña" required minlength="6" maxlength="72" autocomplete="new-password">
+                <label for="regConfirm">Confirmar contraseña</label>
+                <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+              </div>
+              <!-- Botón para mostrar/ocultar la confirmación -->
+              <button type="button" class="btn btn-eye" id="toggleRegConfirm" aria-label="Mostrar u ocultar confirmación" style="border:none;outline:none;box-shadow:none">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+
+            <!-- Medidor visual de fuerza de la contraseña -->
+            <div class="strength mt-2" aria-live="polite">
+              <div class="strength-bar" id="strengthBarReg"></div>
+              <span id="strengthLabelReg" class="strength-label">Fuerza: —</span>
+            </div>
+
+            <!-- Aviso cuando Bloq Mayús está activado -->
+            <div id="capsWarningReg" class="form-text text-warning small d-none mt-2">
+              <i class="bi bi-exclamation-triangle"></i> Bloq Mayús activado.
+            </div>
+
+            <!-- Aceptación de términos y política de privacidad -->
+            <div class="form-check mt-3">
+              <input class="form-check-input" type="checkbox" id="termsCheck" required>
+              <label class="form-check-label" for="termsCheck">
+                Acepto los <a href="#" class="link-success">Términos</a> y la <a href="#" class="link-success">Política de Privacidad</a>.
+              </label>
+              <div class="invalid-feedback">Debes aceptar los términos para continuar.</div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-grid gap-2 mt-3">
+              <!-- Botón principal para crear cuenta (con spinner de carga) -->
+              <button id="btnRegister" class="btn btn-custom" type="submit">
+                <span class="btn-label">Crear cuenta</span>
+                <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+              </button>
+              <!-- Link para usuarios que ya tienen una cuenta -->
+              <a href="login.html" class="btn btn-outline-success">Ya tengo cuenta</a>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Toasts: notificación flotante para mostrar mensajes de éxito/error -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index:1100;">
+    <div id="toastAuth" class="toast align-items-center border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">Listo.</div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts de la página -->
+  <!-- Bootstrap JS (para toasts, modales, etc.) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Lógica de registro -->
+  <script>
+  (function(){
+    // URL base de la API del backend (servidor Node/Express)
+    const API = 'http://127.0.0.1:4000'; // coincide con tu Live Server 127.0.0.1:5500
+
+    // Referencias al formulario y botón de registro
+    const form = document.getElementById('registerForm');
+    const btn = document.getElementById('btnRegister');
+    const spinner = btn.querySelector('.spinner-border');
+
+    // Inputs que necesito para armar el payload de registro
+    const inputUsername = document.getElementById('regUsername');
+    const inputEmail    = document.getElementById('regEmail');
+    const inputPw       = document.getElementById('regPassword');
+    const inputConf     = document.getElementById('regConfirm');
+    const terms         = document.getElementById('termsCheck');
+
+    // Configuración del toast de feedback
+    const toastEl = document.getElementById('toastAuth');
+    const toast = new bootstrap.Toast(toastEl);
+
+    // Función genérica para mostrar mensajes en el toast (éxito o error)
+    function showToast(msg, type='success'){
+      const body = toastEl.querySelector('.toast-body');
+      body.textContent = msg;
+      toastEl.classList.remove('bg-danger','bg-success','text-white');
+      if(type==='success'){ toastEl.classList.add('bg-success','text-white'); }
+      else { toastEl.classList.add('bg-danger','text-white'); }
+      toast.show();
+    }
+
+    // Helpers
+    // Calcula un “puntaje” básico de fuerza de contraseña
+    function score(pw){
+      let s=0; if(pw.length>=6) s++; if(pw.length>=10) s++; if(/[A-Z]/.test(pw)) s++; if(/[0-9]/.test(pw)) s++; if(/[^A-Za-z0-9]/.test(pw)) s++; return s;
+    }
+
+    // Submit
+    // Manejo el envío del formulario de registro
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      form.classList.add('was-validated'); // activo estilos de validación de Bootstrap
+
+      // Regla extra: username >= 3 caracteres
+      if (inputUsername.value.trim().length < 3) inputUsername.setCustomValidity('short');
+      else inputUsername.setCustomValidity('');
+
+      // Regla extra: contraseñas deben coincidir
+      if (inputPw.value !== inputConf.value) inputConf.setCustomValidity('mismatch');
+      else inputConf.setCustomValidity('');
+
+      // Términos deben estar marcados
+      if (!terms.checked) terms.setCustomValidity('no'); else terms.setCustomValidity('');
+
+      // Si el formulario no pasa validaciones, no envío nada al backend
+      if (!form.checkValidity()) return;
+
+      // Deshabilito botón y muestro spinner mientras hago la petición
+      btn.disabled = true; spinner.classList.remove('d-none');
+
+      // Normaliza email (reemplaza NBSP y recorta espacios)
+      const rawEmail = inputEmail.value || '';
+      const email = rawEmail.replace(/\u00A0/g,' ').trim();
+
+      // Objeto que le envío al backend para crear el usuario
+      const payload = {
+        email,
+        username: inputUsername.value.trim(),
+        password: inputPw.value
+      };
+
+      try {
+        // Llamada al endpoint de registro en el backend
+        const res = await fetch(API + '/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'No se pudo crear la cuenta');
+
+        // Inicia sesión automáticamente al crear la cuenta
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('user', JSON.stringify(data.user));
+
+        // Mensaje de éxito y redirección al inicio
+        showToast('¡Cuenta creada con éxito!');
+        setTimeout(() => { window.location.href = 'inicio.html'; }, 800);
+      } catch (err) {
+        // Si algo falla, informo al usuario mediante el toast
+        showToast(err.message || 'Error de registro', 'danger');
+      } finally {
+        // Restaura el estado del botón y oculta el spinner
+        btn.disabled = false; spinner.classList.add('d-none');
+      }
+    });
+
+    // Ojos de password
+    // Alterna visibilidad de la contraseña principal
+    document.getElementById('toggleRegPassword').addEventListener('click', () => {
+      const isText = inputPw.type === 'text';
+      inputPw.type = isText ? 'password' : 'text';
+      const icon = document.querySelector('#toggleRegPassword i'); icon.classList.toggle('bi-eye'); icon.classList.toggle('bi-eye-slash');
+      inputPw.focus();
+    });
+    // Alterna visibilidad de la confirmación de contraseña
+    document.getElementById('toggleRegConfirm').addEventListener('click', () => {
+      const isText = inputConf.type === 'text';
+      inputConf.type = isText ? 'password' : 'text';
+      const icon = document.querySelector('#toggleRegConfirm i'); icon.classList.toggle('bi-eye'); icon.classList.toggle('bi-eye-slash');
+      inputConf.focus();
+    });
+
+    // Bloq Mayús + fuerza
+    const caps = document.getElementById('capsWarningReg');
+    const bar  = document.getElementById('strengthBarReg');
+    const label= document.getElementById('strengthLabelReg');
+
+    // Aviso cuando el usuario tiene activado CapsLock al escribir la contraseña
+    inputPw.addEventListener('keyup', (e) => {
+      const on = e.getModifierState && e.getModifierState('CapsLock');
+      caps.classList.toggle('d-none', !on);
+    });
+
+    // Actualizo barra y texto de fuerza cada vez que cambia la contraseña
+    inputPw.addEventListener('input', () => {
+      const s = score(inputPw.value);
+      const pct = Math.min(s*20,100);
+      bar.style.width = pct + '%';
+      bar.classList.remove('bg-danger','bg-warning','bg-success');
+      if (s<=2){ bar.classList.add('bg-danger'); label.textContent='Fuerza: débil'; }
+      else if (s===3){ bar.classList.add('bg-warning'); label.textContent='Fuerza: media'; }
+      else { bar.classList.add('bg-success'); label.textContent='Fuerza: fuerte'; }
+      if (!inputPw.value){ label.textContent='Fuerza: —'; bar.style.width='0%'; bar.classList.remove('bg-danger','bg-warning','bg-success'); }
+    });
+  })();
+  </script>
+</body>
+</html>
