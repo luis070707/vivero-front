@@ -1,14 +1,15 @@
 // js/orders.js - pedidos admin
 (() => {
   // URL base de mi API
-const API = "https://vivero-back.onrender.com";
+  const API = "https://vivero-back.onrender.com";
 
   // Atajos para el DOM
   const $  = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));
 
   // Autenticación: saco el token del storage
-  const token = localStorage.getItem("token") || sessionStorage.getItem("token") || null;
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token") || null;
   // Cabeceras que voy a mandar a la API cuando necesito auth
   const authHeaders = token ? { Authorization: "Bearer " + token } : {};
 
@@ -66,28 +67,38 @@ const API = "https://vivero-back.onrender.com";
   // ==== Refs UI ====
 
   // Filtros y campos del listado de pedidos
-  const ordMonth  = $("#ordMonth");
-  const ordYear   = $("#ordYear");
-  const qOrder    = $("#qOrder");
+  const ordMonth = $("#ordMonth");
+  const ordYear = $("#ordYear");
+  const qOrder = $("#qOrder");
   const btnSearchOrder = $("#btnSearchOrder");
   // Cuerpo de la tabla donde pinto los pedidos
   const orderBody = $("#orderBody");
   // Botón para crear un nuevo pedido manual
   const btnNewOrder = $("#btnNewOrder");
 
+  // Controles de paginación de pedidos (solo frontend)
+  const ordPrev = $("#ordPrev");
+  const ordNext = $("#ordNext");
+  const ordPage = $("#ordPage");
+  const ordPages = $("#ordPages");
+
+  // Datos y estado de paginación de pedidos
+  let ORDERS_DATA = [];
+  const ORD_PAGER = { page: 1, size: 10 };
+
   // Modal para crear pedidos
   const orderModalEl = document.getElementById("orderModal");
-  const orderModal   = orderModalEl ? new bootstrap.Modal(orderModalEl) : null;
+  const orderModal = orderModalEl ? new bootstrap.Modal(orderModalEl) : null;
 
   // Refs del formulario del modal de pedidos
-  const orderForm   = $("#orderForm");
-  const ordItems    = $("#ordItems");  // tabla interna con las filas de items
-  const btnAddRow   = $("#btnAddRow"); // botón para añadir fila de producto
-  const ordTotalEl  = $("#ordTotal");  // total del pedido
-  const ordDate     = $("#ordDate");   // fecha/hora del pedido
+  const orderForm = $("#orderForm");
+  const ordItems = $("#ordItems"); // tabla interna con las filas de items
+  const btnAddRow = $("#btnAddRow"); // botón para añadir fila de producto
+  const ordTotalEl = $("#ordTotal"); // total del pedido
+  const ordDate = $("#ordDate"); // fecha/hora del pedido
   const ordCustomer = $("#ordCustomer"); // nombre del cliente
-  const ordPhone    = $("#ordPhone");  // telefono del cliente
-  const prodListDL  = $("#prodList");  // datalist para autocompletar productos
+  const ordPhone = $("#ordPhone"); // telefono del cliente
+  const prodListDL = $("#prodList"); // datalist para autocompletar productos
 
   // ==== Productos para datalist ====
   // Aquí guardo la lista de productos disponibles para llenar filas rápido
@@ -108,9 +119,9 @@ const API = "https://vivero-back.onrender.com";
       if (prodListDL) {
         prodListDL.innerHTML = PRODUCTS.map(
           (p) =>
-            `<option value="${p.name}">${p.category_name ? p.category_name + " – " : ""}${fmtCOP(
-              p.price
-            )}</option>`
+            `<option value="${p.name}">${
+              p.category_name ? p.category_name + " – " : ""
+            }${fmtCOP(p.price)}</option>`
         ).join("");
       }
     } catch (e) {
@@ -126,26 +137,100 @@ const API = "https://vivero-back.onrender.com";
   function fillMonthYear(selM, selY) {
     if (selM) {
       const months = [
-        "Enero","Febrero","Marzo","Abril","Mayo","Junio",
-        "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
       ];
-      selM.innerHTML = months.map((m,i)=>`<option value="${i+1}">${m}</option>`).join("");
+      selM.innerHTML = months
+        .map((m, i) => `<option value="${i + 1}">${m}</option>`)
+        .join("");
       // Dejo por defecto el mes actual
       selM.value = String(new Date().getMonth() + 1);
     }
     if (selY) {
       const nowY = new Date().getFullYear();
       // Creo un rango de 7 años (3 antes y 3 después del actual)
-      selY.innerHTML = Array.from({length:7},(_,k)=>nowY-3+k)
-        .map((y)=>`<option value="${y}" ${y===nowY?"selected":""}>${y}</option>`)
+      selY.innerHTML = Array.from({ length: 7 }, (_, k) => nowY - 3 + k)
+        .map(
+          (y) =>
+            `<option value="${y}" ${y === nowY ? "selected" : ""}>${y}</option>`
+        )
         .join("");
       selY.value = String(nowY);
     }
   }
 
-  // ==== Cargar pedidos ====
+  // ==== Render de pedidos con paginación (solo frontend) ====
 
-  // Cargo los pedidos del backend y los pinto en la tabla
+  function renderOrders() {
+    if (!orderBody) return;
+
+    const total = ORDERS_DATA.length;
+    const pages = Math.max(1, Math.ceil(total / ORD_PAGER.size));
+    if (ORD_PAGER.page > pages) ORD_PAGER.page = pages;
+
+    const start = (ORD_PAGER.page - 1) * ORD_PAGER.size;
+    const end = start + ORD_PAGER.size;
+    const rows = ORDERS_DATA.slice(start, end);
+
+    if (!rows.length) {
+      orderBody.innerHTML = `
+        <tr>
+          <td colspan="6" class="text-center text-muted py-4">
+            No hay pedidos en este periodo.
+          </td>
+        </tr>
+      `;
+    } else {
+      orderBody.innerHTML = rows
+        .map((o, idx) => {
+          const dt = o.date ? new Date(o.date) : null;
+          const fecha = dt
+            ? dt.toLocaleString("es-CO", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "—";
+          const index = start + idx + 1;
+          const itemsCount = o.items_count ?? 0;
+          const totalCents = o.total ?? 0;
+
+          return `
+            <tr>
+              <td>${index}</td>
+              <td>${fecha}</td>
+              <td>${o.customer_name || "—"}</td>
+              <td class="text-end">${itemsCount}</td>
+              <td class="text-end">${fmtCOP(totalCents)}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-outline-secondary btn-sm" disabled>
+                  <i class="bi bi-eye"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        })
+        .join("");
+    }
+
+    if (ordPage) ordPage.textContent = String(ORD_PAGER.page);
+    if (ordPages) ordPages.textContent = String(pages);
+  }
+
+  // ==== Cargar pedidos desde backend ====
+
   async function loadOrders() {
     if (!orderBody) return;
 
@@ -160,53 +245,13 @@ const API = "https://vivero-back.onrender.com";
       const params = new URLSearchParams();
       // Filtro por mes, año y texto si están definidos
       if (ordMonth?.value) params.set("month", ordMonth.value);
-      if (ordYear?.value)  params.set("year", ordYear.value);
+      if (ordYear?.value) params.set("year", ordYear.value);
       if (qOrder?.value.trim()) params.set("q", qOrder.value.trim());
 
       const data = await apiGet(`/api/admin/orders?${params.toString()}`);
-      const items = data.items || [];
-
-      // Si no hay pedidos, muestro mensaje
-      if (!items.length) {
-        orderBody.innerHTML = `
-          <tr>
-            <td colspan="6" class="text-center text-muted py-4">
-              No hay pedidos en este periodo.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      // Pinto cada pedido como una fila en la tabla
-      orderBody.innerHTML = items
-        .map((o, idx) => {
-          const dt = o.date ? new Date(o.date) : null;
-          const fecha = dt
-            ? dt.toLocaleString("es-CO", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-            : "—";
-          return `
-            <tr>
-              <td>${idx + 1}</td>
-              <td>${fecha}</td>
-              <td>${o.customer_name || "—"}</td>
-              <td class="text-end">${o.items_count ?? 0}</td>
-              <td class="text-end">${fmtCOP(o.total ?? 0)}</td>
-              <td class="text-center">
-                <button type="button" class="btn btn-outline-secondary btn-sm" disabled>
-                  <i class="bi bi-eye"></i>
-                </button>
-              </td>
-            </tr>
-          `;
-        })
-        .join("");
+      ORDERS_DATA = data.items || [];
+      ORD_PAGER.page = 1; // cada vez que recargo, vuelvo a la página 1
+      renderOrders();
     } catch (e) {
       console.error("Error cargando pedidos", e);
       // Si algo falla, muestro mensaje de error en la tabla
@@ -217,21 +262,27 @@ const API = "https://vivero-back.onrender.com";
           </td>
         </tr>
       `;
+      ORDERS_DATA = [];
+      if (ordPage) ordPage.textContent = "1";
+      if (ordPages) ordPages.textContent = "1";
     }
   }
 
-  // ==== Filas dinámicas ====
+  // ==== Filas dinámicas del modal de pedido ====
 
   // Convierto el valor de un input numérico a número limpio (sin puntos)
   function numberVal(input) {
-    const n = Number(String(input.value || "0").replace(/\./g,""));
+    const n = Number(String(input.value || "0").replace(/\./g, ""));
     return Number.isFinite(n) ? n : 0;
   }
 
   // Recalculo el subtotal de una fila (precio * cantidad)
   function recalcRow(row) {
     const price = numberVal(row.querySelector(".ord-price"));
-    const qty   = Math.max(1, parseInt(row.querySelector(".ord-qty").value || "1", 10));
+    const qty = Math.max(
+      1,
+      parseInt(row.querySelector(".ord-qty").value || "1", 10)
+    );
     row.querySelector(".ord-sub").textContent = fmtCOP(price * qty);
   }
 
@@ -240,7 +291,10 @@ const API = "https://vivero-back.onrender.com";
     let total = 0;
     $$("#ordItems tr").forEach((row) => {
       const price = numberVal(row.querySelector(".ord-price"));
-      const qty   = Math.max(1, parseInt(row.querySelector(".ord-qty").value || "1", 10));
+      const qty = Math.max(
+        1,
+        parseInt(row.querySelector(".ord-qty").value || "1", 10)
+      );
       total += price * qty;
     });
     if (ordTotalEl) ordTotalEl.textContent = fmtCOP(total);
@@ -266,7 +320,9 @@ const API = "https://vivero-back.onrender.com";
         <input class="form-control form-control-sm ord-qty" type="number" min="1" step="1"
                value="${seed?.qty || 1}">
       </td>
-      <td class="text-end ord-sub">${fmtCOP((seed?.price || 0) * (seed?.qty || 1))}</td>
+      <td class="text-end ord-sub">${fmtCOP(
+        (seed?.price || 0) * (seed?.qty || 1)
+      )}</td>
       <td>
         <button type="button" class="btn btn-outline-danger btn-sm ord-del">
           <i class="bi bi-trash"></i>
@@ -328,9 +384,11 @@ const API = "https://vivero-back.onrender.com";
     const now = new Date();
     const pad = (n) => String(n).padStart(2, "0");
     if (ordDate) {
-      ordDate.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(
-        now.getDate()
-      )}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      ordDate.value = `${now.getFullYear()}-${pad(
+        now.getMonth() + 1
+      )}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(
+        now.getMinutes()
+      )}`;
     }
 
     // Cargo productos para el datalist y agrego una fila inicial
@@ -353,7 +411,10 @@ const API = "https://vivero-back.onrender.com";
       const idVal = row.querySelector(".ord-id").value;
       const product_id = idVal ? Number(idVal) : null;
       const price = numberVal(row.querySelector(".ord-price"));
-      const qty   = Math.max(1, parseInt(row.querySelector(".ord-qty").value || "1", 10));
+      const qty = Math.max(
+        1,
+        parseInt(row.querySelector(".ord-qty").value || "1", 10)
+      );
 
       if (name && price >= 0) {
         items.push({ product_id, name, qty, unit_price: price });
@@ -394,9 +455,35 @@ const API = "https://vivero-back.onrender.com";
   // ==== Init ====
 
   // Filtros y listado inicial de pedidos
-  btnSearchOrder?.addEventListener("click", loadOrders);
-  ordMonth?.addEventListener("change", loadOrders);
-  ordYear?.addEventListener("change", loadOrders);
+  btnSearchOrder?.addEventListener("click", () => {
+    ORD_PAGER.page = 1;
+    loadOrders();
+  });
+  ordMonth?.addEventListener("change", () => {
+    ORD_PAGER.page = 1;
+    loadOrders();
+  });
+  ordYear?.addEventListener("change", () => {
+    ORD_PAGER.page = 1;
+    loadOrders();
+  });
+
+  // Botones de paginación
+  ordPrev?.addEventListener("click", () => {
+    if (ORD_PAGER.page > 1) {
+      ORD_PAGER.page--;
+      renderOrders();
+    }
+  });
+
+  ordNext?.addEventListener("click", () => {
+    const total = ORDERS_DATA.length;
+    const pages = Math.max(1, Math.ceil(total / ORD_PAGER.size));
+    if (ORD_PAGER.page < pages) {
+      ORD_PAGER.page++;
+      renderOrders();
+    }
+  });
 
   (async function init() {
     // Lleno los selects de mes y año

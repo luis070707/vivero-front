@@ -272,6 +272,15 @@
             </tbody>
           </table>
         </div>
+
+        <!-- ⭐ Nuevo: paginación de pedidos (solo frontend) -->
+        <div class="d-flex justify-content-end align-items-center gap-2 mt-2">
+          <button id="ordPrev" class="btn btn-outline-secondary btn-sm">«</button>
+          <span class="small">
+            Página <span id="ordPage">1</span> de <span id="ordPages">1</span>
+          </span>
+          <button id="ordNext" class="btn btn-outline-secondary btn-sm">»</button>
+        </div>
       </section>
 
       <!-- Sección de REPORTES: gráficos de ventas y top productos con Chart.js -->
