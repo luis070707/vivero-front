@@ -79,10 +79,10 @@
     }
     // Me aseguro de que haya link a “Contacto” en la navbar
     const navList = document.querySelector(".navbar-nav");
-    if (navList && !navList.querySelector('a[href="inicio.html#contacto"], a[href="#contacto"], a[href="contacto.html"]')) {
+    if (navList && !navList.querySelector('a[href="index.html#contacto"], a[href="#contacto"], a[href="contacto.html"]')) {
       const li = document.createElement("li");
       li.className = "nav-item";
-      li.innerHTML = `<a class="nav-link" href="inicio.html#contacto">Contacto</a>`;
+      li.innerHTML = `<a class="nav-link" href="index.html#contacto">Contacto</a>`;
       navList.insertBefore(li, navList.querySelector(".nav-item:last-child"));
     }
   }

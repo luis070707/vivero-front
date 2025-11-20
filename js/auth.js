@@ -60,7 +60,7 @@ export function wireLoginForm() {
       // Guardo token y datos del usuario en sesión
       setToken(token); setUser(user);
       // Redirijo a la página principal
-      location.href = 'index.html'; // o inicio.html según mi caso
+      location.href = 'index.html'; //Pagina principal
     } catch (err) {
       alert(err.message || 'Error al iniciar sesión');
     }

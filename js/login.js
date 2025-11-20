@@ -68,7 +68,7 @@ const API = "https://vivero-back.onrender.com";
       // Aviso que todo salió bien
       showMsg("¡Bienvenido!");
       // Redirijo a la página de inicio (o la que yo quiera)
-      window.location.href = "inicio.html"; // o a donde prefieras
+      window.location.href = "index.html"; // o a donde prefieras
     } catch (err) {
       // Si hay error, muestro el mensaje que venga del backend o uno genérico
       showMsg(err.message || "Error al iniciar sesión");

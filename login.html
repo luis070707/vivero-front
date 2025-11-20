@@ -282,7 +282,7 @@
 
         // Muestro mensaje de éxito y redirijo al inicio después de un corto tiempo
         showToast('¡Sesión iniciada!');
-        setTimeout(() => { window.location.href = 'inicio.html'; }, 800);
+        setTimeout(() => { window.location.href = 'index.html'; }, 800);
       } catch (err) {
         // Si algo falla, muestro error en el toast
         showToast(err.message || 'Credenciales inválidas', 'danger');

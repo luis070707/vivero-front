@@ -277,7 +277,7 @@ const API = "https://vivero-back.onrender.com";
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("token");
       sessionStorage.removeItem("token");
-      location.href = "inicio.html";
+      location.href = "index.html";
     });
   }
 

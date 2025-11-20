@@ -112,7 +112,7 @@
   $("#btn-logout")?.addEventListener("click", () => {
     if (window.__vivero?.logout) window.__vivero.logout();
     else { localStorage.removeItem("token"); sessionStorage.removeItem("token"); }
-    location.href = "inicio.html";
+    location.href = "index.html";
   });
 
   // Si no es admin, corto aquí y no sigo cargando nada

@@ -107,7 +107,7 @@ const API = "https://vivero-back.onrender.com";
     // Borro el token de los dos storages
     localStorage.removeItem("token"); sessionStorage.removeItem("token");
     // Redirijo al inicio
-    location.href = "inicio.html";
+    location.href = "index.html";
   });
 
   // --- init ---
