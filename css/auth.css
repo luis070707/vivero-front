@@ -75,14 +75,25 @@ body[data-theme="dark"] .auth-card{
 }
 
 /* Marca */
-.brand-mark{
-  width: 56px; height: 56px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: var(--green-100);
-  color: var(--green-800);
-  margin: 0 auto 8px;
-  font-size: 1.25rem;
+/* Logo circular que aparece encima del título "Iniciar sesión" */
+.auth-card .brand-mark {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: #e6f4ea; /* Fondito verde suave */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.75rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
 }
+
+.brand-mark__img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
 
 /* ===== Inputs y validaciones ===== */
 .form-control{ border-radius: 12px; }

@@ -24,37 +24,37 @@
 
   <!-- Navbar -->
   <!-- Barra de navegación superior con acceso a inicio, catálogo y login -->
- <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
-  <div class="container">
-    <!-- Marca del sitio: logo + nombre que llevan al inicio -->
-    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-      <img
-        src="images/iconovivero.png"
-        alt="Vivero Nuevo Renacer"
-        class="brand-logo"
-        loading="eager"
-        decoding="async"
-      />
-      <span>Vivero Nuevo Renacer</span>
-    </a>
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <div class="container">
+      <!-- Marca del sitio: logo + nombre que llevan al inicio -->
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <img
+          src="images/iconovivero.png"
+          alt="Vivero Nuevo Renacer"
+          class="brand-logo"
+          loading="eager"
+          decoding="async"
+        />
+        <span>Vivero Nuevo Renacer</span>
+      </a>
 
-    <!-- Botón hamburguesa para colapsar/mostrar el menú en pantallas pequeñas -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar navegación">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <!-- Botón hamburguesa para colapsar/mostrar el menú en pantallas pequeñas -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar navegación">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <!-- Enlaces de navegación -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
-        <!-- Enlace actual: página de Login marcada como activa -->
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Login</a></li>
-      </ul>
+      <!-- Enlaces de navegación -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+          <!-- Enlace actual: página de Login marcada como activa -->
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Login</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 
   <!-- Canvas del login -->
@@ -86,8 +86,13 @@
         <div class="auth-card__inner">
           <!-- Encabezado de la tarjeta de login -->
           <div class="text-center mb-3">
-            <!-- Marca visual (círculo/loguito) manejada por CSS -->
-            <div class="brand-mark"></div>
+            <!-- Marca visual: aquí uso mi logo redondo del vivero -->
+            <div class="brand-mark">
+              <!-- Meto el logo dentro del circulito para que quede centrado -->
+              <img src="images/iconovivero.png"
+                   alt="Logo Vivero Nuevo Renacer"
+                   class="brand-mark__img">
+            </div>
             <h1 class="h4 mb-1">Iniciar sesión</h1>
             <p class="text-muted small mb-0">Bienvenido de vuelta</p>
           </div>
@@ -122,26 +127,14 @@
               </button>
             </div>
 
-            <!-- Medidor de fuerza -->
-            <!-- Indicador visual de qué tan fuerte es la contraseña que va escribiendo el usuario -->
-            <div class="strength mt-2" aria-live="polite">
-              <div class="strength-bar" id="strengthBar"></div>
-              <span id="strengthLabel" class="strength-label">Fuerza: —</span>
-            </div>
-
             <!-- Aviso cuando Bloq Mayús está activo mientras se escribe la contraseña -->
             <div id="capsWarning" class="form-text text-warning small d-none mt-2">
               <i class="bi bi-exclamation-triangle"></i> Bloq Mayús activado.
             </div>
 
             <!-- Opciones -->
-            <!-- Contiene el "Recordarme" y el enlace para recuperar contraseña -->
-            <div class="d-flex justify-content-between align-items-center my-3">
-              <!-- Checkbox para recordar sesión (decidiré si uso localStorage o sessionStorage en JS) -->
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="rememberMe">
-                <label class="form-check-label" for="rememberMe">Recordarme</label>
-              </div>
+            <!-- Aquí solo dejo el enlace de "¿Olvidaste tu contraseña?" alineado a la derecha -->
+            <div class="d-flex justify-content-end my-3">
               <!-- Botón que abre el modal de recuperar contraseña -->
               <button class="btn btn-link p-0 text-decoration-none" type="button" data-bs-toggle="modal" data-bs-target="#recoverModal">
                 ¿Olvidaste tu contraseña?
@@ -162,9 +155,9 @@
             </div>
           </form>
 
-          <!-- Aviso legal de términos y privacidad (enlaces de ejemplo) -->
+          <!-- Aviso legal de términos y privacidad -->
           <p class="text-center mt-3 small text-muted">
-            Al continuar aceptas nuestros <a href="#" class="link-success">Términos</a> y <a href="#" class="link-success">Privacidad</a>.
+            Al continuar aceptas nuestros <a href="terminos.html" class="link-success">Términos</a> y <a href="privacidad.html" class="link-success">Privacidad</a>.
           </p>
         </div>
       </section>
@@ -172,11 +165,11 @@
   </main>
 
   <!-- Modal: Recuperar contraseña -->
-  <!-- Modal donde el usuario pone su correo para recibir un enlace de recuperación (simulado) -->
+  <!-- Modal donde el usuario pone su correo para recibir un enlace de recuperación -->
   <div class="modal fade" id="recoverModal" tabindex="-1" aria-labelledby="recoverLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <!-- Formulario interno del modal (no hace llamada real, solo simulo con JS) -->
+        <!-- Formulario interno del modal -->
         <form id="recoverForm" novalidate>
           <div class="modal-header">
             <h5 class="modal-title" id="recoverLabel">Recuperar contraseña</h5>
@@ -193,7 +186,7 @@
           <div class="modal-footer">
             <!-- Botón para cerrar el modal sin hacer nada -->
             <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
-            <!-- Botón que dispara el flujo simulado de recuperación -->
+            <!-- Botón que dispara el flujo de recuperación -->
             <button id="btnRecover" class="btn btn-custom" type="submit">
               <span class="btn-label">Enviar enlace</span>
               <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
@@ -205,7 +198,7 @@
   </div>
 
   <!-- Toasts -->
-  <!-- Contenedor para mostrar notificaciones flotantes (éxito/error) relacionadas al login o recuperación -->
+  <!-- Contenedor para mostrar notificaciones flotantes (éxito/error) -->
   <div class="position-fixed bottom-0 end-0 p-3" style="z-index:1100;">
     <div id="toastAuth" class="toast align-items-center border-0" role="status" aria-live="polite" aria-atomic="true">
       <div class="d-flex">
@@ -219,7 +212,7 @@
   <!-- Script de Bootstrap (JS) para manejar modales, toasts, etc. -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!--  Script de login: maneja validación, fuerza, ojo, Bloq Mayús y llamada al backend -->
+  <!-- Script de login: maneja validación, ojo, Bloq Mayús, llamada al backend y recuperación -->
   <script>
   (function(){
    // URL base de mi API backend 
@@ -231,7 +224,6 @@
     const inputPw = document.getElementById('loginPassword');
     const btnLogin = document.getElementById('btnLogin');
     const spinner = btnLogin.querySelector('.spinner-border');
-    const remember = document.getElementById('rememberMe');
 
     // Configuración del toast para mostrar mensajes de feedback
     const toastEl = document.getElementById('toastAuth');
@@ -275,10 +267,9 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Error al iniciar sesión');
 
-        // Según el checkbox "Recordarme" decido si guardo en localStorage o sessionStorage
-        const store = remember.checked ? localStorage : sessionStorage;
-        store.setItem('token', data.token);
-        store.setItem('user', JSON.stringify(data.user));
+        // Aquí guardo la sesión siempre en sessionStorage (solo mientras la pestaña esté abierta)
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('user', JSON.stringify(data.user));
 
         // Muestro mensaje de éxito y redirijo al inicio después de un corto tiempo
         showToast('¡Sesión iniciada!');
@@ -312,70 +303,59 @@
       document.getElementById('capsWarning').classList.toggle('d-none', !on);
     });
 
-    // Medidor de fuerza de contraseña (informativo)
-    const bar = document.getElementById('strengthBar');
-    const label = document.getElementById('strengthLabel');
-
-    // Función que calcula un puntaje básico según longitud y tipos de caracteres
-    function score(pw){
-      let s = 0;
-      if (pw.length >= 6) s++;
-      if (pw.length >= 10) s++;
-      if (/[A-Z]/.test(pw)) s++;
-      if (/[0-9]/.test(pw)) s++;
-      if (/[^A-Za-z0-9]/.test(pw)) s++;
-      return s; // 0..5
-    }
-
-    // Cada vez que se escribe algo en la contraseña actualizo la barra y el texto
-    inputPw.addEventListener('input', () => {
-      const s = score(inputPw.value);
-      const pct = Math.min(s * 20, 100);
-      bar.style.width = pct + '%';
-      bar.classList.remove('bg-danger','bg-warning','bg-success');
-
-      if (s <= 2) {
-        bar.classList.add('bg-danger');
-        label.textContent = 'Fuerza: débil';
-      }
-      else if (s === 3) {
-        bar.classList.add('bg-warning');
-        label.textContent = 'Fuerza: media';
-      }
-      else {
-        bar.classList.add('bg-success');
-        label.textContent = 'Fuerza: fuerte';
-      }
-
-      // Si no hay nada escrito, reseteo el medidor
-      if (!inputPw.value) {
-        label.textContent = 'Fuerza: —';
-        bar.style.width = '0%';
-        bar.classList.remove('bg-danger','bg-warning','bg-success');
-      }
-    });
-
-    // Recuperar contraseña (simulado)
-    // Manejo el submit del formulario del modal de recuperación
+    // Recuperar contraseña (ahora sí llamo a mi backend)
+    // Aquí conecto el modal de "recuperar contraseña" con la API del backend
     const recoverForm = document.getElementById('recoverForm');
-    recoverForm.addEventListener('submit', (e) => {
+    const btnRecover = document.getElementById('btnRecover');
+    const spinnerRecover = btnRecover.querySelector('.spinner-border');
+
+    recoverForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('recoverEmail').value.trim();
+      // Activo la validación visual de Bootstrap
+      recoverForm.classList.add('was-validated');
 
-      // Validación sencilla del formato del correo
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
-        recoverForm.classList.add('was-validated');
-        return;
+      // Si el formulario no pasa las validaciones HTML5, no sigo
+      if (!recoverForm.checkValidity()) return;
+
+      // Tomo el correo ya validado
+      const emailInput = document.getElementById('recoverEmail');
+      const email = emailInput.value.trim();
+
+      // Desactivo el botón y muestro el spinner del modal
+      btnRecover.disabled = true;
+      spinnerRecover.classList.remove('d-none');
+
+      try {
+        // Hago la petición al endpoint de "olvidé mi contraseña" de mi backend
+        const res = await fetch(API + '/api/auth/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'No se pudo enviar el correo de recuperación');
+
+        // Si todo salió bien, cierro el modal
+        const modalEl = document.getElementById('recoverModal');
+        const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        modal.hide();
+
+        // Limpio el formulario del modal
+        recoverForm.reset();
+        recoverForm.classList.remove('was-validated');
+
+        // Muestro un mensaje amistoso al usuario
+        showToast(data.message || 'Listo, revisa tu correo para continuar con el cambio de contraseña.');
+      } catch (err) {
+        // Si algo falla, aviso con un toast de error
+        showToast(err.message || 'Ocurrió un error al recuperar la contraseña.', 'danger');
+      } finally {
+        // Siempre reactivo el botón y oculto el spinner
+        btnRecover.disabled = false;
+        spinnerRecover.classList.add('d-none');
       }
-
-      // Cierro el modal manualmente
-      const modalEl = document.getElementById('recoverModal');
-      const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-      modal.hide();
-
-      // Mensaje informativo (lógica real de recuperación no está implementada)
-      showToast('Si el correo existe, enviaremos un enlace para recuperar tu contraseña.');
     });
+
   })();
   </script>
 
