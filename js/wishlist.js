@@ -46,8 +46,10 @@
     return data;
   }
 
-  // ---------- Navbar (hidratar como en inicio/catalogo) ----------
-  // Ajusto la navbar para esta página de wishlist, similar a otras páginas
+  // ---------- Navbar (igual que el resto del sitio) ----------
+// Aquí reaprovecho la misma lógica de app.js para mostrar/ocultar
+// el login y el menú de perfil. Además, solo oculto el item
+// "Mis favoritos" dentro del dropdown cuando ya estoy en wishlist.
 function hydrateWishlistNavbar() {
   const auth = $("#nav-auth-only");
   const prof = $("#nav-profile");
@@ -55,35 +57,37 @@ function hydrateWishlistNavbar() {
   const adminLink = $("#nav-admin");
 
   if (isLoggedIn()) {
-    // Oculto cosas de login y muestro el perfil
+    // Oculto botones de login y muestro el perfil
     auth && auth.classList.add("d-none");
     prof && prof.classList.remove("d-none");
+
     const cl = getClaims();
-    if (nameEl) nameEl.textContent = cl?.username || cl?.email || "Mi perfil";
-    // Muestro/oculto link de admin según el rol
+    if (nameEl) {
+      nameEl.textContent = cl?.username || cl?.email || "Mi perfil";
+    }
+
+    // Si el usuario es admin, muestro/oculto el link de admin
     if (adminLink) {
-      if (cl?.is_admin) adminLink.classList.remove("d-none");
-      else adminLink.classList.add("d-none");
+      if (cl?.is_admin) {
+        adminLink.classList.remove("d-none");
+      } else {
+        adminLink.classList.add("d-none");
+      }
     }
   } else {
-    // Si no hay sesión, hago lo contrario
+    // Si no hay sesión, muestro login y oculto perfil
     auth && auth.classList.remove("d-none");
     prof && prof.classList.add("d-none");
+    if (adminLink) adminLink.classList.add("d-none");
   }
 
-  // Si esta navbar es de una versión vieja, la ajusto:
-  const wishBtn = document.querySelector('a[href="wishlist.html"]');
-  if (wishBtn?.closest(".nav-item")) {
-    // Oculto el botón de corazón para que se parezca a las demás páginas
-    wishBtn.closest(".nav-item").classList.add("d-none");
-  }
-  // Me aseguro de que haya link a “Contacto” en la navbar
-  const navList = document.querySelector(".navbar-nav");
-  if (navList && !navList.querySelector('a[href="index.html#contacto"], a[href="#contacto"], a[href="contacto.html"]')) {
-    const li = document.createElement("li");
-    li.className = "nav-item";
-    li.innerHTML = `<a class="nav-link" href="index.html#contacto">Contacto</a>`;
-    navList.insertBefore(li, navList.querySelector(".nav-item:last-child"));
+  // Extra: en la propia página de favoritos, oculto SOLO el item
+  // "Mis favoritos" del menú desplegable, para no tener un link que
+  // recarga la misma página.
+  const wishLink = document.querySelector('a[href="wishlist.html"]');
+  const wishLi = wishLink?.closest("li");
+  if (wishLi && wishLi.parentElement?.classList.contains("dropdown-menu")) {
+    wishLi.classList.add("d-none");
   }
 }
 
