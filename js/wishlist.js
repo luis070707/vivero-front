@@ -48,44 +48,45 @@
 
   // ---------- Navbar (hidratar como en inicio/catalogo) ----------
   // Ajusto la navbar para esta página de wishlist, similar a otras páginas
-  function hydrateWishlistNavbar() {
-    const auth = $("#nav-auth-only");
-    const prof = $("#nav-profile");
-    const nameEl = $("#nav-username");
-    const adminLink = $("#nav-admin");
+function hydrateWishlistNavbar() {
+  const auth = $("#nav-auth-only");
+  const prof = $("#nav-profile");
+  const nameEl = $("#nav-username");
+  const adminLink = $("#nav-admin");
 
-    if (isLoggedIn()) {
-      // Oculto cosas de login y muestro el perfil
-      auth && auth.classList.add("d-none");
-      prof && prof.classList.remove("d-none");
-      const cl = getClaims();
-      if (nameEl) nameEl.textContent = cl?.username || cl?.email || "Mi perfil";
-      // Muestro/oculto link de admin según el rol
-      if (adminLink) {
-        if (cl?.is_admin) adminLink.classList.remove("d-none");
-        else adminLink.classList.add("d-none");
-      }
-    } else {
-      // Si no hay sesión, hago lo contrario
-      auth && auth.classList.remove("d-none");
-      prof && prof.classList.add("d-none");
+  if (isLoggedIn()) {
+    // Oculto cosas de login y muestro el perfil
+    auth && auth.classList.add("d-none");
+    prof && prof.classList.remove("d-none");
+    const cl = getClaims();
+    if (nameEl) nameEl.textContent = cl?.username || cl?.email || "Mi perfil";
+    // Muestro/oculto link de admin según el rol
+    if (adminLink) {
+      if (cl?.is_admin) adminLink.classList.remove("d-none");
+      else adminLink.classList.add("d-none");
     }
-
-    // Si esta navbar es de una versión vieja, la ajusto:
-    const wishBtn = document.querySelector('a[href="wishlist.html"]');
-    if (wishBtn?.closest(".nav-item")) {
-      // Oculto el botón de corazón para que se parezca a las demás páginas
-      wishBtn.closest(".nav-item").classList.add("d-none");
-    }
-    // Me aseguro de que haya link a “Contacto” en la navbar
-    const navList = document.querySelector(".navbar-nav");
-    if (navList && !navList.querySelector('a[href="index.html#contacto"], a[href="#contacto"], a[href="contacto.html"]')) {
-      const li = document.createElement("li");
-      li.className = "nav-item";
-      li.innerHTML = `<a class="nav-link" href="index.html#contacto">Contacto</a>`;
-      navList.insertBefore(li, navList.querySelector(".nav-item:last-child"));
-    }
+  } else {
+    // Si no hay sesión, hago lo contrario
+    auth && auth.classList.remove("d-none");
+    prof && prof.classList.add("d-none");
   }
+
+  // Si esta navbar es de una versión vieja, la ajusto:
+  const wishBtn = document.querySelector('a[href="wishlist.html"]');
+  if (wishBtn?.closest(".nav-item")) {
+    // Oculto el botón de corazón para que se parezca a las demás páginas
+    wishBtn.closest(".nav-item").classList.add("d-none");
+  }
+  // Me aseguro de que haya link a “Contacto” en la navbar
+  const navList = document.querySelector(".navbar-nav");
+  if (navList && !navList.querySelector('a[href="index.html#contacto"], a[href="#contacto"], a[href="contacto.html"]')) {
+    const li = document.createElement("li");
+    li.className = "nav-item";
+    li.innerHTML = `<a class="nav-link" href="index.html#contacto">Contacto</a>`;
+    navList.insertBefore(li, navList.querySelector(".nav-item:last-child"));
+  }
+}
+
 
   // ---------- Badges ----------
   // Actualizo el numerito del carrito

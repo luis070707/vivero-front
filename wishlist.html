@@ -30,60 +30,92 @@
 </head>
 <body>
 
-  <!-- Navbar principal (coherente con el resto de páginas del sitio) -->
+  <!-- Navbar principal-->
+<!-- Navbar (misma que catálogo, sin "Mi perfil") -->
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
   <div class="container">
-    <!-- Logo + nombre del vivero que llevan al inicio -->
+    <!-- Marca del vivero (logo + texto) que redirige al inicio -->
     <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-      <img src="images/iconovivero.png" alt="Vivero Nuevo Renacer" class="brand-logo" />
+      <img
+        src="images/iconovivero.png"
+        alt="Vivero Nuevo Renacer"
+        class="brand-logo"
+        loading="eager"
+        decoding="async"
+      />
       <span>Vivero Nuevo Renacer</span>
     </a>
 
-    <!-- Botón hamburguesa para abrir/cerrar el menú en pantallas pequeñas -->
+    <!-- Botón hamburguesa para mostrar/ocultar menú en móviles -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navBar" aria-controls="navBar" aria-expanded="false" aria-label="Mostrar navegación">
+            data-bs-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Mostrar navegación">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menú de navegación -->
-    <div class="collapse navbar-collapse" id="navBar">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+    <!-- Enlaces de la navegación -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <!-- Link a la página de inicio -->
         <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+        <!-- Catálogo (aquí sin .active porque estamos en wishlist) -->
         <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+        <!-- Enlaces que hacen scroll a secciones del inicio -->
         <li class="nav-item"><a class="nav-link" href="index.html#contacto">Contacto</a></li>
         <li class="nav-item"><a class="nav-link" href="index.html#ubicacion">Ubicación</a></li>
 
-        <!-- Dropdown de perfil que solo se muestra cuando el usuario está logueado (controlado por JS en app.js) -->
-        <li id="nav-profile" class="nav-item dropdown d-none">
-          <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-person-circle"></i>
-            <span id="nav-username">Mi perfil</span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Mi perfil</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-receipt me-2"></i>Mis pedidos</a></li>
-            <li><a id="nav-admin" class="dropdown-item d-none" href="admin.html"><i class="bi bi-speedometer me-2"></i>Panel administrador</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><button id="btn-logout" class="dropdown-item text-danger"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</button></li>
-          </ul>
-        </li>
-
-        <!-- Botón de login que muestro cuando NO hay sesión -->
-        <li id="nav-auth-only" class="nav-item">
-          <a class="btn btn-outline-light btn-sm" href="login.html">Iniciar sesión</a>
-        </li>
-
-        <!-- Botón del carrito con contador, compartido con el resto del sitio -->
+        <!-- Carrito (penúltimo) -->
         <li class="nav-item">
-          <button class="btn btn-light position-relative" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+          <button class="btn btn-light position-relative"
+                  data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
             <i class="bi bi-bag"></i>
+            <!-- Badge con el contador de ítems en el carrito -->
             <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
           </button>
+        </li>
+
+        <!-- Botones si NO hay sesión -->
+        <li id="nav-auth-only" class="nav-item d-flex gap-2">
+          <a class="btn btn-light" href="login.html">Iniciar sesión</a>
+          <a class="btn btn-outline-light" href="registro.html">Registrarse</a>
+        </li>
+
+        <!-- Perfil (último a la derecha) | orden: icono → nombre → flecha -->
+        <li id="nav-profile" class="nav-item dropdown d-none ms-lg-2">
+          <a class="nav-link dropdown-toggle no-caret d-flex align-items-center gap-2 nav-profile-trigger"
+             href="#" role="button"
+             data-bs-toggle="dropdown"
+             data-bs-display="static"
+             aria-expanded="false">
+            <i class="bi bi-person-circle fs-5"></i>
+            <span id="nav-username" class="d-none d-lg-inline">Mi perfil</span>
+            <i class="bi bi-caret-down-fill"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <!-- OJO: aquí ya NO está "Mi perfil" -->
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2" href="wishlist.html">
+                <i class="bi bi-heart"></i> Mis favoritos
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 d-none" id="nav-admin" href="admin.html">
+                <i class="bi bi-speedometer2"></i> Panel administrador
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <button class="dropdown-item text-danger d-flex align-items-center gap-2" id="btn-logout" type="button">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+              </button>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
 
 
   <!-- Encabezado de la página de favoritos -->
