@@ -4,7 +4,7 @@
   const API = "https://vivero-back.onrender.com";
 
   // Atajos para el DOM
-  const $  = (s) => document.querySelector(s);
+  const $ = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));
 
   // Autenticación: saco el token del storage
@@ -22,6 +22,16 @@
       currency: "COP",
       minimumFractionDigits: 0,
     });
+
+  // Escapo texto antes de meterlo en HTML
+  function escapeHtml(str) {
+    return String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
   // Notificación flotante usando clases de alert de Bootstrap
   function showNotification(text, type = "success") {
@@ -89,6 +99,19 @@
   // Modal para crear pedidos
   const orderModalEl = document.getElementById("orderModal");
   const orderModal = orderModalEl ? new bootstrap.Modal(orderModalEl) : null;
+
+  // Modal de detalle de pedido (solo lectura)
+  const orderDetailModalEl = document.getElementById("orderDetailModal");
+  const orderDetailModal = orderDetailModalEl
+    ? new bootstrap.Modal(orderDetailModalEl)
+    : null;
+
+  const ordDetId = $("#ordDetId");
+  const ordDetDate = $("#ordDetDate");
+  const ordDetCustomer = $("#ordDetCustomer");
+  const ordDetPhone = $("#ordDetPhone");
+  const ordDetTotal = $("#ordDetTotal");
+  const ordDetItems = $("#ordDetItems");
 
   // Refs del formulario del modal de pedidos
   const orderForm = $("#orderForm");
@@ -204,18 +227,22 @@
               })
             : "—";
           const index = start + idx + 1;
-          const itemsCount = o.items_count ?? 0;
+          const itemsCount = o.items_count ?? o.itemsCount ?? 0;
           const totalCents = o.total ?? 0;
 
           return `
-            <tr>
+            <tr class="order-row">
               <td>${index}</td>
               <td>${fecha}</td>
               <td>${o.customer_name || "—"}</td>
               <td class="text-end">${itemsCount}</td>
               <td class="text-end">${fmtCOP(totalCents)}</td>
               <td class="text-center">
-                <button type="button" class="btn btn-outline-secondary btn-sm" disabled>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-sm btn-view-order"
+                  data-id="${o.id}"
+                  title="Ver detalle del pedido">
                   <i class="bi bi-eye"></i>
                 </button>
               </td>
@@ -228,6 +255,119 @@
     if (ordPage) ordPage.textContent = String(ORD_PAGER.page);
     if (ordPages) ordPages.textContent = String(pages);
   }
+
+  // ==== Detalle de un pedido (modal con tarjetas) ====
+
+  async function loadOrderDetail(id) {
+    if (!ordDetItems) return;
+
+    // Estado inicial
+    ordDetItems.innerHTML =
+      '<div class="text-center text-muted py-3 w-100">Cargando detalle…</div>';
+    if (ordDetId) ordDetId.textContent = `#${id}`;
+    if (ordDetDate) ordDetDate.textContent = "";
+    if (ordDetCustomer) ordDetCustomer.textContent = "—";
+    if (ordDetPhone) ordDetPhone.textContent = "—";
+    if (ordDetTotal) ordDetTotal.textContent = "—";
+
+    try {
+      const data = await apiGet(`/api/admin/orders/${id}`);
+      const order = data.order || {};
+      const items = data.items || [];
+
+      if (ordDetId) ordDetId.textContent = `#${order.id ?? id}`;
+      if (ordDetDate && order.date) {
+        const dt = new Date(order.date);
+        ordDetDate.textContent = dt.toLocaleString("es-CO", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+      if (ordDetCustomer)
+        ordDetCustomer.textContent = order.customer_name || "—";
+      if (ordDetPhone)
+        ordDetPhone.textContent = order.customer_phone || "—";
+      if (ordDetTotal)
+        ordDetTotal.textContent = fmtCOP(
+          order.total_cents ?? order.total ?? 0
+        );
+
+      if (!items.length) {
+        ordDetItems.innerHTML =
+          '<div class="text-center text-muted py-3 w-100">Este pedido no tiene ítems.</div>';
+      } else {
+        ordDetItems.innerHTML = items
+          .map((it) => {
+            const qty = it.qty || 0;
+            const unit = it.unit_price_cents || 0;
+            const subtotal = qty * unit;
+            const img = it.image_url || "";
+            const imgHtml = img
+              ? `<img src="${img}" alt="${escapeHtml(
+                  it.name || ""
+                )}" class="order-item-thumb">`
+              : `<div class="order-item-thumb">Sin<br>imagen</div>`;
+
+            const metaParts = [];
+            if (it.category_name) {
+              metaParts.push(escapeHtml(it.category_name));
+            }
+            if (it.product_id) {
+              metaParts.push("ID producto: " + it.product_id);
+            } else {
+              metaParts.push("Ítem manual");
+            }
+            const meta = metaParts
+              .map((p) => `<span>${p}</span>`)
+              .join("");
+
+            return `
+              <article class="order-item-card">
+                ${imgHtml}
+                <div class="order-item-body">
+                  <div class="order-item-title text-truncate">
+                    ${escapeHtml(it.name || "Producto sin nombre")}
+                  </div>
+                  <div class="order-item-meta mb-2">${meta}</div>
+                  <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
+                    <div class="order-item-price">
+                      <div>Precio unitario: <strong>${fmtCOP(unit)}</strong></div>
+                      <div class="text-muted small">Cantidad: ${qty}</div>
+                    </div>
+                    <div class="order-item-subtotal text-end">
+                      Subtotal<br>${fmtCOP(subtotal)}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      if (orderDetailModal) {
+        orderDetailModal.show();
+      }
+    } catch (e) {
+      console.error("Error cargando detalle de pedido", e);
+      ordDetItems.innerHTML =
+        '<div class="text-center text-danger py-3 w-100">No se pudo cargar el detalle del pedido.</div>';
+    }
+  }
+
+  // Click en el listado de pedidos para abrir el detalle
+  orderBody?.addEventListener("click", (ev) => {
+    const target = ev.target;
+    if (!(target instanceof Element)) return;
+    const btn = target.closest(".btn-view-order");
+    if (!btn) return;
+    const id = btn.getAttribute("data-id");
+    if (!id) return;
+    loadOrderDetail(id);
+  });
 
   // ==== Cargar pedidos desde backend ====
 
@@ -456,7 +596,7 @@
 
   // Filtros y listado inicial de pedidos
   btnSearchOrder?.addEventListener("click", () => {
-    ORD_PAGER.page = 1;
+    ORDERS_DATA.page = 1;
     loadOrders();
   });
   ordMonth?.addEventListener("change", () => {

@@ -369,3 +369,94 @@ body[data-theme="dark"] footer{ background-color:#0e2a21; }
 
 /* Mejoras sutiles */
 .contacto-section .badge{ font-weight: 600; }
+/* ===== Admin - estilos específicos panel ===== */
+.card-stat {
+  border-radius: 1rem;
+}
+
+.table thead th {
+  white-space: nowrap;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.prod-thumb {
+  width: 58px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.order-row td {
+  vertical-align: middle;
+}
+
+/* ===== Admin - detalle de pedidos (tarjetas) ===== */
+.order-detail-header small {
+  font-size: .86rem;
+}
+
+.order-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: .75rem;
+}
+
+.order-item-card {
+  border-radius: .9rem;
+  border: 1px solid #e5e7eb;
+  padding: .75rem;
+  display: flex;
+  gap: .75rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+}
+
+.order-item-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: .75rem;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  color: #9ca3af;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.order-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.order-item-title {
+  font-weight: 600;
+  margin-bottom: .15rem;
+}
+
+.order-item-meta {
+  font-size: .8rem;
+  color: #6b7280;
+}
+
+.order-item-meta span + span::before {
+  content: "•";
+  margin: 0 .35rem;
+  opacity: .6;
+}
+
+.order-item-price {
+  font-size: .85rem;
+}
+
+.order-item-subtotal {
+  font-weight: 600;
+  font-size: .9rem;
+}

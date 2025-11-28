@@ -10,8 +10,8 @@
   <title>Panel Admin - Vivero Nuevo Renacer</title>
 
   <!-- Icono de favicon -->
-   <link rel="icon" type="image/png" href="images/iconoviveroo.png">
-   
+  <link rel="icon" type="image/png" href="images/iconoviveroo.png">
+
   <!-- Descripción corta para buscadores (SEO) -->
   <meta name="description" content="Panel de administración: categorías y productos." />
 
@@ -21,13 +21,6 @@
 
   <!-- Estilos globales + ajustes pequeños específicos del panel -->
   <link rel="stylesheet" href="css/estilos.css">
-  <style>
-    .card-stat { border-radius: 1rem; }
-    .table thead th { white-space: nowrap; }
-    .cursor-pointer { cursor: pointer; }
-    .prod-thumb { width:58px; height:44px; object-fit:cover; border-radius:6px; }
-    .order-row td { vertical-align: middle; }
-  </style>
 </head>
 <body>
 
@@ -276,7 +269,7 @@
           </table>
         </div>
 
-        <!-- ⭐ Nuevo: paginación de pedidos (solo frontend) -->
+        <!-- ⭐ Paginación de pedidos (solo frontend) -->
         <div class="d-flex justify-content-end align-items-center gap-2 mt-2">
           <button id="ordPrev" class="btn btn-outline-secondary btn-sm">«</button>
           <span class="small">
@@ -434,23 +427,22 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
 
-       <div class="modal-body">
-  <!-- Datos básicos del cliente del pedido -->
-  <div class="row g-2">
-    <div class="col-md-6">
-      <label class="form-label">Cliente (opcional)</label>
-      <input id="ordCustomer" class="form-control" placeholder="Nombre del cliente">
-    </div>
-    <div class="col-md-6">
-      <label class="form-label">Teléfono (opcional)</label>
-      <input id="ordPhone" class="form-control" placeholder="Ej: 3001234567">
-    </div>
-    <div class="col-md-6">
-      <label class="form-label">Fecha</label>
-      <input id="ordDate" type="datetime-local" class="form-control">
-    </div>
-  </div>
-
+        <div class="modal-body">
+          <!-- Datos básicos del cliente del pedido -->
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Cliente (opcional)</label>
+              <input id="ordCustomer" class="form-control" placeholder="Nombre del cliente">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Teléfono (opcional)</label>
+              <input id="ordPhone" class="form-control" placeholder="Ej: 3001234567">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Fecha</label>
+              <input id="ordDate" type="datetime-local" class="form-control">
+            </div>
+          </div>
 
           <hr class="my-3">
 
@@ -497,6 +489,55 @@
     </div>
   </div>
 
+  <!-- Modal: detalle de pedido (solo lectura, tarjetas) -->
+  <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="order-detail-header">
+            <h5 class="modal-title mb-0">
+              Detalle del pedido <span id="ordDetId" class="text-muted"></span>
+            </h5>
+            <small id="ordDetDate" class="text-muted d-block"></small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Datos del cliente -->
+          <div class="mb-3">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-5">
+                <div class="fw-semibold small text-uppercase text-muted mb-1">Cliente</div>
+                <div id="ordDetCustomer">—</div>
+              </div>
+              <div class="col-md-4">
+                <div class="fw-semibold small text-uppercase text-muted mb-1">Teléfono</div>
+                <div id="ordDetPhone">—</div>
+              </div>
+              <div class="col-md-3 text-md-end">
+                <div class="fw-semibold small text-uppercase text-muted mb-1">Total pedido</div>
+                <div id="ordDetTotal" class="fs-5 fw-bold text-success">—</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-3">
+
+          <!-- Tarjetas de productos del pedido -->
+          <div id="ordDetItems" class="order-items-grid">
+            <!-- Se llena con JS -->
+          </div>
+        </div>
+
+        <div class="modal-footer justify-content-between">
+          <small class="text-muted">Los valores se muestran en pesos colombianos (COP).</small>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast de feedback general para acciones del panel -->
   <div class="position-fixed bottom-0 end-0 p-3" style="z-index:1100;">
     <div id="toast" class="toast align-items-center border-0" role="status" aria-live="polite" aria-atomic="true">
@@ -516,7 +557,7 @@
   <!-- Librería Chart.js para los gráficos de reportes -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-  <!-- Módulo de pedidos y módulo de reportes (se apoyan en la API sin romper admin.js) -->
+  <!-- Módulo de pedidos y módulo de reportes -->
   <script src="js/orders.js?v=1"></script>
   <script src="js/reports.js?v=1"></script>
 </body>
