@@ -157,3 +157,8 @@ body[data-theme="dark"] .btn-eye:hover{
 body[data-theme="dark"] .modal-content{
   background:#111816; color:#eaf1ed;
 }
+/* Texto del panel visual del login/registro un poco más grueso */
+.auth-visual .visual-content p,
+.auth-visual .benefits li {
+  font-weight: 500; /* prueba 500, si quieres más grueso pon 600 */
+}
