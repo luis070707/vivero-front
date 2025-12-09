@@ -68,12 +68,12 @@ const API = "https://vivero-back.onrender.com";
             label: "Ventas (COP)",
             data: values,
             fill: true,
-            borderColor: "#16a34a",        // verde bonito (borde)
-            backgroundColor: "rgba(22,163,74,0.25)", // verde con transparencia (relleno)
-            pointBackgroundColor: "#15803d",        // color de los puntos
-            pointBorderColor: "#0f5132",           // borde de los puntos
-            tension: 0.4,                           // curva suave
-            borderWidth: 3                          // grosor de la línea
+           borderColor: "#4ade80", // verde suave
+          backgroundColor: "rgba(74, 222, 128, 0.25)", // relleno verde claro
+          pointBackgroundColor: "#4ade80",
+          pointBorderColor: "#22c55e",
+          borderWidth: 3,
+          tension: 0.35                        // grosor de la línea
           },
         ],
       },
@@ -104,8 +104,8 @@ const API = "https://vivero-back.onrender.com";
           {
             label: "Unidades",
             data: values,
-            backgroundColor: "#16a34a",   // azul vivo
-            borderColor: "#0f5132",
+           backgroundColor: "#86efac",  // verde muy suave
+           borderColor: "#4ade80",      // borde suave
             borderWidth: 2
 
           },
